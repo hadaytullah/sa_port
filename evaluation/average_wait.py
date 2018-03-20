@@ -4,6 +4,9 @@ class AverageWait(AbstractEvaluation):
 
     def __init__(self):
         super().__init__()
+        self.evaluation_name = "Average Ship Wait Time"
+        self.maximize = False
+
 
     def evaluate(self, ships):
         average_wait_time = 0

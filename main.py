@@ -1,6 +1,7 @@
 from cargo_ship_port import CargoShipPort
 from mape import Mape
 from evaluation.average_wait import AverageWait
+from evaluation.cost import Cost
 #from strategy import strategy
 
 #TODO: define abstract interface and change the names in the strategies files
@@ -14,7 +15,8 @@ from strategies.strategy_closest_smallest_first import Strategy as StrategyClose
 mape = Mape()
 runs = 20
 for i in range(runs):
-    cargo_ship_port = CargoShipPort(StrategyClosestSmallest(), AverageWait())
+    #cargo_ship_port = CargoShipPort(StrategyClosestSmallest(), AverageWait())
+    cargo_ship_port = CargoShipPort(StrategyClosestSmallest(), Cost())
     average_wait_time = 0
     
     #for i in range(runs):
