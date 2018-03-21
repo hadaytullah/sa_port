@@ -1,4 +1,5 @@
 from cargo_ship_port import CargoShipPort
+from port_model import PortModel
 from mape import Mape
 from evaluation.average_wait import AverageWait
 from evaluation.cost import Cost
@@ -12,15 +13,39 @@ from strategies.strategy_closest_smallest_first import Strategy as StrategyClose
 #from mape import Mape
 
 
+#mape = Mape()
+#runs = 20
+#for i in range(runs):
+#    #cargo_ship_port = CargoShipPort(StrategyClosestSmallest(), AverageWait())
+#    cargo_ship_port = CargoShipPort(StrategyClosestSmallest(), Cost())
+#    average_wait_time = 0
+#
+#    #for i in range(runs):
+#    average_wait_time += cargo_ship_port.step()
+#
+#print('Average wait time in %i runs is %i' %(runs,average_wait_time/runs))
+#mape.monitor(average_wait_time)
+
 mape = Mape()
-runs = 20
-for i in range(runs):
-    #cargo_ship_port = CargoShipPort(StrategyClosestSmallest(), AverageWait())
-    cargo_ship_port = CargoShipPort(StrategyClosestSmallest(), Cost())
-    average_wait_time = 0
+steps = 24*60
+cargo_ship_port = PortModel(StrategyRandom())
+evaluation = AverageWait()
+
+for i in range(steps):
+    cargo_ship_port.step()
+
+#print ("Average Wait: %f hours" %average_wait_time)
+
+print ('%s: %i minutes' %(evaluation.evaluation_name, evaluation.evaluate(cargo_ship_port)))
+print ('ships still waiting: %i' %len(cargo_ship_port.arriving))
+
+
+    #cargo_ship_port = CargoShipPort(StrategyRandom(), AverageWait())
+    #cargo_ship_port = CargoShipPort(StrategyRandom(), Cost())
+    #average_wait_time = 0
     
     #for i in range(runs):
-    average_wait_time += cargo_ship_port.step()
+    #average_wait_time += cargo_ship_port.step()
     
-print('Average wait time in %i runs is %i' %(runs,average_wait_time/runs))
-mape.monitor(average_wait_time)
+#print('Average wait time in %i runs is %i' %(runs,average_wait_time/runs))
+#mape.monitor(average_wait_time)
