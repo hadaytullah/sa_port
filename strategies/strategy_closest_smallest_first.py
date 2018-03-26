@@ -9,6 +9,10 @@
 #    return let_inside_ship, let_inside_index
 
 class Strategy:
+    #TODO: META data for decision making at Planning or META-SA layer
+    #context = [ContextA, ContextB]
+    #quality = [5,10,1]
+
     def apply(self, arriving):
         #let_inside_ship = arriving[0];
         #let_inside_index = 0;

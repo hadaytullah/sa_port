@@ -1,4 +1,4 @@
-from cargo_ship_port import CargoShipPort
+#from cargo_ship_port import CargoShipPort
 from port_model import PortModel
 from mape import Mape
 from evaluation.average_wait import AverageWait
@@ -28,7 +28,8 @@ from strategies.strategy_closest_smallest_first import Strategy as StrategyClose
 
 mape = Mape()
 steps = 24*60
-cargo_ship_port = PortModel(StrategyRandom())
+#cargo_ship_port = PortModel(StrategyRandom())
+cargo_ship_port = PortModel(StrategyClosest())
 evaluation = AverageWait()
 
 for i in range(steps):

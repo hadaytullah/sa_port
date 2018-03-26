@@ -28,8 +28,10 @@ class AverageWait(AbstractEvaluation):
 
     def evaluate(self, port_model):
         average_wait_time = 0
+        ships_count = 0
         for terminal in port_model.terminals:
             ships = terminal.served_ships
+            ships_count += len(ships)
             #average_wait_time = 0
             if len(ships) > 0:
                 print("WAIT TIMES")
@@ -41,8 +43,9 @@ class AverageWait(AbstractEvaluation):
                     wait_sum += current_ship.wait
 
                 #calculating average
-                average_wait_time = wait_sum/len(ships)
-                #print ("Average Wait: %f hours" %average_wait_time)
+        average_wait_time = wait_sum/ships_count
+        print ('ships served:%i' %len(ships))
+        #print ("Average Wait: %f hours" %average_wait_time)
         #else:
         #    print ('No average, no ship served.')
         return average_wait_time

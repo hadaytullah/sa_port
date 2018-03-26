@@ -9,7 +9,7 @@ class Terminal:
 
         self.strategy = strategy
         #per minute load processing
-        self.processing_capacity = random.randrange(2,3)
+        self.processing_capacity = 5; #random.randrange(2,9)
 
         #ideal number of ships it can process in 24hrs (one run)
         # set at the 75%, rest of the time goes into maintainenance, breaks etc.
@@ -31,7 +31,7 @@ class Terminal:
                 let_inside_ship, let_inside_index = self.strategy.apply(arrived);
 
                 self.ship_on_dock = let_inside_ship
-                self.docked_ship_processed = self.ship_on_dock.size
+                self.docked_ship_processed = self.ship_on_dock.size + (self.ship_on_dock.distance * 60/self.ship_on_dock.max_speed_kmh)
 
                 print ('Serving the ship %i of size %i at %i km with speed of %i kmh' %(self.ship_on_dock.unique_id,
                                                                                         self.ship_on_dock.size, self.ship_on_dock.distance, self.ship_on_dock.max_speed_kmh));
