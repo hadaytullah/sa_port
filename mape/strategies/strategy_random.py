@@ -12,4 +12,3 @@ class Strategy:
     def apply(self, arriving):
         let_inside_index = random.randrange(0,len(arriving))
         return arriving[let_inside_index], let_inside_index
-    

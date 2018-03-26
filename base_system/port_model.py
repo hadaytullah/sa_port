@@ -3,8 +3,8 @@
 
 import random
 import datetime, threading
-from ship import Ship
-from resouces.terminal import Terminal
+from base_system.ship import Ship
+from base_system.resouces.terminal import Terminal
 
 
 class PortModel:

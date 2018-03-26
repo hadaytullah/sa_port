@@ -1,4 +1,4 @@
-from evaluation.abstract_evaluation import AbstractEvaluation
+from mape.evaluation.abstract_evaluation import AbstractEvaluation
 
 class AverageWait(AbstractEvaluation):
 

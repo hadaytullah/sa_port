@@ -21,7 +21,7 @@ class Ship: #AgentCoopa(Agent):
 
         #changing attributes, should not be here, it is not a property of the ship
         self.wait = 0
-        
+
         #Learning, relationship between size and cost
             #personal drived fromt he size
             #cost per minute when waiting

@@ -1,15 +1,15 @@
 #from cargo_ship_port import CargoShipPort
-from port_model import PortModel
-from mape import Mape
-from evaluation.average_wait import AverageWait
-from evaluation.cost import Cost
+from base_system.port_model import PortModel
+from mape.mape import Mape
+from mape.evaluation.average_wait import AverageWait
+from mape.evaluation.cost import Cost
 #from strategy import strategy
 
 #TODO: define abstract interface and change the names in the strategies files
-from strategies.strategy_random import Strategy as StrategyRandom
-from strategies.strategy_closest_first import Strategy as StrategyClosest
-from strategies.strategy_smallest_first import Strategy as StrategySmallest
-from strategies.strategy_closest_smallest_first import Strategy as StrategyClosestSmallest
+from mape.strategies.strategy_random import Strategy as StrategyRandom
+from mape.strategies.strategy_closest_first import Strategy as StrategyClosest
+from mape.strategies.strategy_smallest_first import Strategy as StrategySmallest
+from mape.strategies.strategy_closest_smallest_first import Strategy as StrategyClosestSmallest
 #from mape import Mape
 
 

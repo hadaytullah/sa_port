@@ -1,7 +1,7 @@
-from evaluation.abstract_evaluation import AbstractEvaluation
+from mape.evaluation.abstract_evaluation import AbstractEvaluation
 
 
-class ServicePointOverLoad(AbstractEvaluation):
+class ServicePointUnderLoad(AbstractEvaluation):
 
     def __init__(self):
         super().__init__()
@@ -10,8 +10,8 @@ class ServicePointOverLoad(AbstractEvaluation):
 
 
     def evaluate(self, service_point):
-        print('PointOverLoad, not implemented.')
-        overload = 0
+        print('ServicePointUnderLoad, not implemented.')
+        underload = 0
 #        if len(ships) > 0:
 #            #print("Cost")
 #            average_cost = 0
@@ -26,4 +26,4 @@ class ServicePointOverLoad(AbstractEvaluation):
 #            print ("Average Cost: %f €" %average_cost)
 #        #else:
 #        #    print ('No average, no ship served.')
-        return overload
+        return underload
