@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from base_system.ship import Ship
 
 class AbstractContext(ABC):
 
@@ -9,3 +10,14 @@ class AbstractContext(ABC):
     @abstractmethod
     def step(self):
         pass
+
+    @abstractmethod
+    def getShips(self):
+        pass
+
+    #factory method to create different kind of ships
+    #def factory_large_ship():
+    #    ship = new
+    #    if type == 'large'
+
+
