@@ -2,57 +2,91 @@
 """
 import random
 
-from base_system.port_model import PortModel
-
+from base_system.resources.terminal import Terminal
 from mape.evaluation.average_wait import AverageWait
 
 
-def main_step(ports, step, order, *args, **kwargs):
-    """Main simulation step. Calls each ports :func:`step`.
-
-    :param list ports:
-        All ports in simulation
-    :param int step:
-        The iteration number.
-    :param str order:
-        If ``order == 'random```, shuffles ports in every step.
+def create_terminals(n_terminals, **kwargs):
+    """Convenience function to create a number of terminals with given kwargs.
     """
-    if order == 'random':
-        random.shuffle(ports)
+    agents = []
+    for i in range(n_terminals):
+        agent_name = "T{:0>2}".format(i + 1)
+        agents.append(Terminal(name=agent_name, **kwargs))
+    return agents
 
-    for p in ports:
-        p.step(step, *args, **kwargs)
 
+class Simulation():
+    """Main simulation implementation.
 
-def main_finish_step(ports, step, *args, **kwargs):
-    """Callback to each port after main step has been executed (for logging, etc.).
+    Holds agents, context and evaluation and is responsible for calling the context's and each
+    agent's :func:`step` and :func:`finish_step`.
+
+    Usage:
+        n_steps = 1000
+        sim = Simulation(agents, context, evaluation)
+        sim.run(n_steps, *args, **kwargs)
+        # do some analysis
+        sim.run(n_steps, *args, **kwargs)
+        # etc.
     """
-    for p in ports:
-        p.finish_step(step, *args, **kwargs)
 
+    def __init__(self, agents, context, evaluation, **kwargs):
+        """Create simulation with given agents, context and evaluation.
 
-def create_ports(n_ports, *args, **kwargs):
-    """Create ``n_ports`` with given args and kwargs.
-    """
-    ports = []
-    for i in range(n_ports):
-        port_name = "Port{:0>2}".format(i+1)
-        ports.append(PortModel(name=port_name, **kwargs))
-    return ports
+        Arbitrary keyword arguments are added as attributes.
+        """
+        self.ctx = context
+        self.agents = agents
+        self.evaluation = evaluation
+        self.clock = 0
 
+        # Set some arbitrary values given by kwargs if needed
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
-def run(n_ports, steps, order, *args, **kwargs):
-    """Main simulation creation and loop.
-    """
-    evaluation = kwargs.pop('evaluation', AverageWait())
-    port_kwargs = kwargs.pop('port_kwargs', {})
-    ports = create_ports(n_ports, **port_kwargs)
+    def _init_step(self):
+        """Initialize simulation step.
+        """
+        self.clock += 1
 
-    for i in range(steps):
-        main_step(ports, i, 'random')
-        main_finish_step(ports, i)
-        #evaluation.report(ports)
+    def _step(self, order='random', **kwargs):
+        """Main simulation step. Calls each agent's :func:`step`.
 
-    for p in ports:
-        print ('{}: {} minutes'.format(evaluation.evaluation_name, evaluation.evaluate(p)))
-        print ('Ships still waiting: {}'.format(len(p.arriving)))
+        :param str order:
+            If ``order == 'random```, shuffles agents in every step.
+        """
+        if order == 'random':
+            random.shuffle(self.agents)
+
+        for a in self.agents:
+            a.step(**kwargs)
+
+    def _finish_step(self, **kwargs):
+        """Callback to each agent after main step has been executed (for logging, etc.).
+        """
+        self.ctx.finish_step(**kwargs)
+        for a in self.agents:
+            a.finish_step(**kwargs)
+
+    def run(self, steps, order='random', **kwargs):
+        """Main simulation run loop which advances the simulation ``steps`` iterations.
+
+        Additional keyword arguments are passed for agents the context and the agents
+        at each time step. Context's step function is called before any agent's step function.
+
+        :param int steps:
+            Number of steps to advance the simulation.
+        :param str order:
+            If ``order == 'random```, shuffles agents in every step.
+        """
+        for i in range(steps):
+            self._init_step()
+            self.ctx.step(**kwargs)
+            self._step(order, **kwargs)
+            self._finish_step(**kwargs)
+            #evaluation.report(ports)
+
+        for a in self.agents:
+            print('{}: {} minutes'.format(self.evaluation.evaluation_name, self.evaluation.evaluate(a)))
+        print('Ships still waiting: {}'.format(len(self.ctx.ships_arrived)))

@@ -4,9 +4,11 @@ import random
 #a port can hold one or more service points to serve the ships with varying traits
 # for example, capacity, staff, etc.
 
-class Terminal:
-    def __init__(self, strategy):
 
+class Terminal:
+    def __init__(self, strategy, ctx, name=None):
+        self.name = 'T00' if name is None else name
+        self.ctx = ctx
         self.strategy = strategy
         #per minute load processing
         self.processing_capacity = 5; #random.randrange(2,9)
@@ -25,16 +27,17 @@ class Terminal:
         self.ship_on_dock = None
         self.docked_ship_processed = 0
 
-    def step(self, arrived):
+    def step(self, **kwargs):
         if self.ship_on_dock is None:
+            arrived = self.ctx.get_arrived()
             if len(arrived) > 0:
-                let_inside_ship, let_inside_index = self.strategy.apply(arrived);
+                let_inside_ship, let_inside_index = self.strategy.apply(arrived)
 
                 self.ship_on_dock = let_inside_ship
                 self.docked_ship_processed = self.ship_on_dock.size + (self.ship_on_dock.distance * 60/self.ship_on_dock.max_speed_kmh)
 
-                print ('Serving the ship %i of size %i at %i km with speed of %i kmh' %(self.ship_on_dock.unique_id,
-                                                                                        self.ship_on_dock.size, self.ship_on_dock.distance, self.ship_on_dock.max_speed_kmh));
+                self.log('Serving the ship %i of size %i at %i km with speed of %i kmh' %(self.ship_on_dock.unique_id,
+                                                                                          self.ship_on_dock.size, self.ship_on_dock.distance, self.ship_on_dock.max_speed_kmh));
                 self.process()
                 self.served_ships.append(arrived.pop(let_inside_index));
 
@@ -49,11 +52,17 @@ class Terminal:
         #print ('Serving the ship %i of size %i at %i km with speed of %i kmh' %(ship.unique_id, ship.size, ship.distance, ship.max_speed_kmh));
         if self.ship_on_dock is not None:
             if self.docked_ship_processed > 0:
-                print ('Still Serving %i' %self.ship_on_dock.unique_id)
+                self.log('Still Serving {}'.format(self.ship_on_dock.unique_id))
                 self.docked_ship_processed -= self.processing_capacity
             else:
                 self.ship_on_dock  = None
                 self.docked_ship_processed = 0
+
+    def finish_step(self, **kwargs):
+        pass
+
+    def log(self, msg):
+        print("{}: {}".format(self.name, msg))
 
 
 

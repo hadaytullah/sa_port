@@ -1,7 +1,8 @@
+import random
 
 from base_system.context.abstract_context import AbstractContext
 from base_system.ship import Ship
-import random
+
 
 class RandomDistributionContext (AbstractContext):
     def __init__(self):
@@ -10,10 +11,15 @@ class RandomDistributionContext (AbstractContext):
         self.ships_arrived = []
         self.ship_unique_id = 1
 
-    def step(self):
+    def step(self, **kwargs):
         if random.choice([True, False]): #faster solution bool(random.getrandbits(1))
             self.ships_arrived.append(Ship(self.ship_unique_id))
             self.ship_unique_id += 1
 
-    def getShips(self):
+    def finish_step(self, **kwargs):
+        pass
+
+    def get_arrived(self):
         return self.ships_arrived
+
+
