@@ -2,33 +2,39 @@ import random
 
 class ShipFactory(object):
     # Create based on class name:
-    def factory(type):
+    def factory(type,unique_id):
         #return eval(type + "()")
         if type == "Small":
-            ship = ship()
+            ship = Ship(unique_id)
             ship.size = random.randrange(60,80)
-            ship.cost = (abs (self.size/10))*(30) * abs(self.size*0.05)
+            ship.cost = (abs (ship.size/10))*(30) * abs(ship.size*0.05)
             return ship
 
         elif type == "Medium":
-            ship = ship()
+            ship = Ship(unique_id)
             ship.size = random.randrange(120,140)
-            ship.cost = (abs (self.size/10))*(30) * abs(self.size*0.05)
+            ship.cost = (abs (ship.size/10))*(30) * abs(ship.size*0.05)
             return ship
 
         elif type == "Large":
-            ship = ship()
+            ship = Ship(unique_id)
             ship.size = random.randrange(150,180)
-            ship.cost = (abs (self.size/10))*(30) * abs(self.size*0.05)
+            ship.cost = (abs (ship.size/10))*(30) * abs(ship.size*0.05)
             return ship
 
         else:
-            ship = ship()
+            ship = Ship(unique_id)
             return ship
 
     factory = staticmethod(factory)
 
 class Ship: #AgentCoopa(Agent):
+
+    #TODO: remove constants, add variables, shared ones
+    #shared among all ship objects
+    min_size = 60
+    max_size = 180
+
     def __init__(self, unique_id):#, model):
         #super().__init__(unique_id, model)
         self.unique_id = unique_id

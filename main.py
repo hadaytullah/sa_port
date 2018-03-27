@@ -4,6 +4,8 @@ from mape.evaluation.average_wait import AverageWait
 #TODO: define abstract interface and change the names in the strategies files
 from mape.strategies.strategy_closest_first import Strategy as StrategyClosest
 from base_system.context.cxt_random_distribution import RandomDistributionContext
+from base_system.context.cxt_majority_small_ships import MajoritySmallShipsContext
+from base_system.context.cxt_majority_large_ships import MajorityLargeShipsContext
 import simulation
 
 
@@ -19,7 +21,12 @@ if __name__ == "__main__":
     n_agents = args.agents
     steps = args.steps
 
-    ctx = RandomDistributionContext()
+    #ctx = RandomDistributionContext()
+    #ctx = MajorityLargeShipsContext()
+
+    ctx = MajoritySmallShipsContext()
+
+    ctx.set_traffic_density(ctx.TRAFFIC_LOW)
     agent_kwargs = {'strategy': StrategyClosest(), 'ctx': ctx}
     agents = simulation.create_terminals(n_agents, **agent_kwargs)
     evaluation = AverageWait()
