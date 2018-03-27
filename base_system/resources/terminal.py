@@ -5,7 +5,7 @@ import random
 # for example, capacity, staff, etc.
 
 class Terminal:
-    def __init__(self,strategy):
+    def __init__(self, strategy):
 
         self.strategy = strategy
         #per minute load processing

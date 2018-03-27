@@ -4,13 +4,13 @@
 import random
 import datetime, threading
 from base_system.ship import Ship
-from base_system.resouces.terminal import Terminal
+from base_system.resources.terminal import Terminal
 
 
 class PortModel:
 
-    def __init__(self, strategy):
-
+    def __init__(self, name="Port", strategy=None):
+        self.name = name
         self.terminals = [Terminal(strategy)]
 
         #self.served_ships = []
@@ -37,10 +37,13 @@ class PortModel:
 #                current_ship.wait = current_ship.wait + let_inside_ship.size + (let_inside_ship.distance* 60/let_inside_ship.max_speed_kmh)
 #        print('Sever Ships:%d' %len(self.served_ships))
 
+    def log(self, msg):
+        print("{}: {}".format(self.name, msg))
 
-    def step(self):
+
+    def step(self, *args, **kwargs):
         self.clock += 1
-        print ('Clock:%i' %self.clock)
+        self.log('Clock: {}'.format(self.clock))
 
         arriving = self.simulate_arrival()
         for terminal in self.terminals:
@@ -49,6 +52,13 @@ class PortModel:
         #self.on_arrival(arriving)
         #return self.evaluation.evaluate(self.served_ships)
         #return self.calculate_average()
+
+    def finish_step(self, *args, **kwargs):
+        """Callback after each step for logging, etc.
+
+        This is called after all ports (terminals) in the simulation have executed their step.
+        """
+        pass
 
     def simulate_arrival(self):
         #TODO: Context-awareness: Generate different traffic patterns for different dates

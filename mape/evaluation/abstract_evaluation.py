@@ -9,3 +9,4 @@ class AbstractEvaluation(ABC):
     @abstractmethod
     def evaluate(self):
         pass
+
