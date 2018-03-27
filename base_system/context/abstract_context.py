@@ -7,5 +7,13 @@ class AbstractContext(ABC):
         super().__init__()
 
     @abstractmethod
-    def step(self):
+    def step(self, **kwargs):
+        pass
+
+    @abstractmethod
+    def finish_step(self, **kwargs):
+        pass
+
+    @abstractmethod
+    def get_arrived(self):
         pass
