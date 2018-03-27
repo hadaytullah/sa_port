@@ -4,7 +4,7 @@
 import random
 import datetime, threading
 from base_system.ship import Ship
-from base_system.resouces.terminal import Terminal
+from base_system.resources.terminal import Terminal
 
 
 class PortModel:
