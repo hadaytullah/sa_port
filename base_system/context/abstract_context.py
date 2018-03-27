@@ -8,16 +8,13 @@ class AbstractContext(ABC):
         super().__init__()
 
     @abstractmethod
-    def step(self):
+    def step(self, **kwargs):
         pass
 
     @abstractmethod
-    def getShips(self):
+    def finish_step(self, **kwargs):
         pass
 
-    #factory method to create different kind of ships
-    #def factory_large_ship():
-    #    ship = new
-    #    if type == 'large'
-
-
+    @abstractmethod
+    def get_arrived(self):
+        pass
