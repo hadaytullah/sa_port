@@ -1,5 +1,6 @@
 #from cargo_ship_port import CargoShipPort
 import random
+import argparse
 
 from base_system.port_model import PortModel
 from mape.mape import Mape
@@ -31,10 +32,18 @@ import simulation
 #mape.monitor(average_wait_time)
 
 if __name__ == "__main__":
-    n_ports = 5
-    steps = 24*60
+    desc = "Command line script to run self-adaptive terminals simulations."
+    parser = argparse.ArgumentParser(description=desc)
+    parser.add_argument('-a', metavar='agents', type=int, dest='agents',
+                        help="Number of agents.", default=4)
+    parser.add_argument('-s', metavar='steps', type=int, dest='steps',
+                        help="Number of simulation steps.", default=24*60)
+    args = parser.parse_args()
+
+    n_agents = args.agents
+    steps = args.steps
     port_kwargs = {'strategy': StrategyClosest()}
-    simulation.run(n_ports, steps, order='random', port_kwargs=port_kwargs)
+    simulation.run(n_agents, steps, order='random', port_kwargs=port_kwargs)
 
     #mape = Mape()
     #cargo_ship_port = PortModel(StrategyRandom())
