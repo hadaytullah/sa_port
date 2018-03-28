@@ -3,7 +3,7 @@ import argparse
 from mape.evaluation.average_wait import AverageWait
 #TODO: define abstract interface and change the names in the strategies files
 from mape.strategies.strategy_closest_first import Strategy as StrategyClosest
-from base_system.context.cxt_random_distribution import RandomDistribution
+from base_system.context.bernoulli_distribution import BernoulliDistribution
 import simulation
 
 
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     n_agents = args.agents
     steps = args.steps
 
-    ctx = RandomDistribution()
+    ctx = BernoulliDistribution(p=0.5)
     agent_kwargs = {'strategy': StrategyClosest(), 'ctx': ctx}
     agents = simulation.create_terminals(n_agents, **agent_kwargs)
     evaluation = AverageWait()

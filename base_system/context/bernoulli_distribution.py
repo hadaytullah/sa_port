@@ -5,7 +5,8 @@ from base_system.ship import Ship
 
 
 class BernoulliDistribution (AbstractContext):
-    """Context creating ships using Bernoulli distribution with given p.
+    """Context creating ships using Bernoulli distribution with given p, i.e. the probability to
+    flip heads.
     """
     def __init__(self, p=0.5):
         super().__init__()
