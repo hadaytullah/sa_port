@@ -10,7 +10,7 @@ class ShipFactory(object):
     def factory(ship_type):
         unique_id = ShipFactory.next_ship_id()
 
-        #return eval(type + "()")
+        # return eval(type + "()")
         if ship_type == "Small":
             ship = Ship(unique_id)
             ship.size = random.randrange(60, 80)
@@ -43,7 +43,6 @@ class ShipFactory(object):
     def next_ship_id():
         ship_id = ShipFactory.ship_id
         ShipFactory.ship_id += 1
-        print(ShipFactory.ship_id)
         return ship_id
 
 
