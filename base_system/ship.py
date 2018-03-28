@@ -19,7 +19,8 @@ class ShipFactory(object):
 
     @staticmethod
     def get_ship_size(ship_type):
-        # return eval(type + "()")
+        """Get new ship size by ship type.
+        """
         if ship_type == "Small":
             return random.randrange(60, 80)
         if ship_type == "Medium":
