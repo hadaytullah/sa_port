@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from base_system.ship import Ship
 
 class AbstractContext(ABC):
 
@@ -16,4 +17,8 @@ class AbstractContext(ABC):
 
     @abstractmethod
     def get_arrived(self):
+        pass
+
+    @abstractmethod
+    def set_traffic_density(self, value):
         pass

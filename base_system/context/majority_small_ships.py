@@ -1,23 +1,32 @@
 
-from base_system.context.abstract_context import AbstractContext
+#from base_system.context.abstract_context import AbstractContext
+from base_system.context.base_context import BaseContext
 from base_system.ship import Ship
+from base_system.ship import ShipFactory
 import random
 
 
-class MajoritySmallShips (AbstractContext):
+class MajoritySmallShipsContext (BaseContext):
     def __init__(self):
         super().__init__()
         self.context_name = "Majority of the ships are small"
-        self.ships_arrived = []
-        self.ship_unique_id = 1
 
     def step(self, **kwargs):
-        if random.choice([True, False]): #faster solution bool(random.getrandbits(1))
-            self.ships_arrived.append(Ship(self.ship_unique_id))
-            self.ship_unique_id += 1
+
+        #if random.choice([True, False]): #may or may not arrive #faster solution bool(random.getrandbits(1))
+        if self.add_new_ship(): #traffic density dictates this choice
+            isSmall = True if random.randrange(0,100) < 90 else False # less probability for larger ships
+
+            if isSmall:
+                self.ships_arrived.append(ShipFactory.factory('Small', self.ship_unique_id))
+                self.ship_unique_id += 1
+            else:
+                self.ships_arrived.append(ShipFactory.factory('Large', self.ship_unique_id))
+                self.ship_unique_id += 1
+
+
 
     def finish_step(self, **kwargs):
         pass
 
-    def get_arrived(self):
-        return self.ships_arrived
+
