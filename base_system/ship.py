@@ -7,7 +7,7 @@ class ShipFactory(object):
     ship_id = 1
 
     @staticmethod
-    def factory(ship_type):
+    def create(ship_type):
         """Create a new ship.
 
         :param ship_type:
@@ -33,6 +33,8 @@ class ShipFactory(object):
 
     @staticmethod
     def next_ship_id():
+        """Request next ship's unique id.
+        """
         ship_id = ShipFactory.ship_id
         ShipFactory.ship_id += 1
         return ship_id

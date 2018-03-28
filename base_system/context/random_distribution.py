@@ -12,13 +12,13 @@ class RandomDistributionContext(BaseContext):
     def step(self, **kwargs):
         if self.add_new_ship():
             if random.choice([True, False]):  # faster solution bool(random.getrandbits(1))
-                self.ships_arrived.append(ShipFactory.factory('Large'))
+                self.ships_arrived.append(ShipFactory.create('Large'))
             elif random.choice([True, False]):  # faster solution bool(random.getrandbits(1))
-                self.ships_arrived.append(ShipFactory.factory('Medium'))
+                self.ships_arrived.append(ShipFactory.create('Medium'))
             elif random.choice([True, False]):  # faster solution bool(random.getrandbits(1))
-                self.ships_arrived.append(ShipFactory.factory('Small'))
+                self.ships_arrived.append(ShipFactory.create('Small'))
             else:
-                self.ships_arrived.append(ShipFactory.factory('Any'))
+                self.ships_arrived.append(ShipFactory.create('Any'))
 
     def finish_step(self, **kwargs):
         pass
