@@ -28,4 +28,5 @@ if __name__ == "__main__":
     evaluation = AverageWait()
     sim = simulation.Simulation(agents, ctx, evaluation)
     sim.run(steps, 'random')
+    sim.end()
 

@@ -1,9 +1,8 @@
-"""Main functions for creating and executing simulations.
+"""Main functionality for creating and executing simulations.
 """
 import random
 
 from base_system.resources.terminal import Terminal
-from mape.evaluation.average_wait import AverageWait
 
 
 def create_terminals(n_terminals, **kwargs):
@@ -54,7 +53,7 @@ class Simulation():
         """Main simulation step. Calls each agent's :func:`step`.
 
         :param str order:
-            If ``order == 'random```, shuffles agents in every step.
+            If ``order == 'random'``, shuffles agents in every step.
         """
         if order == 'random':
             random.shuffle(self.agents)
@@ -78,7 +77,7 @@ class Simulation():
         :param int steps:
             Number of steps to advance the simulation.
         :param str order:
-            If ``order == 'random```, shuffles agents in every step.
+            If ``order == 'random'``, shuffles agents in every step.
         """
         for i in range(steps):
             self._init_step()
@@ -90,3 +89,8 @@ class Simulation():
         for a in self.agents:
             print('{}: {} minutes'.format(self.evaluation.evaluation_name, self.evaluation.evaluate(a)))
         print('Ships still waiting: {}'.format(len(self.ctx.ships_arrived)))
+
+    def end(self, *args, **kwargs):
+        """Perform last book-keeping, logging, etc. in order to end the simulation.
+        """
+        pass
