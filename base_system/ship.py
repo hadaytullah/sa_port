@@ -1,6 +1,10 @@
 import random
 
 
+SHIP_MIN_SIZE = 60
+SHIP_MAX_SIZE = 180
+
+
 class ShipFactory(object):
 
     # Unique ID of the next created ship.
@@ -29,7 +33,7 @@ class ShipFactory(object):
             return random.randrange(150, 180)
         if type(ship_type) == int:
             return ship_type
-        return random.randint(Ship.min_size, Ship.max_size)
+        return random.randint(SHIP_MIN_SIZE, SHIP_MAX_SIZE)
 
     @staticmethod
     def next_ship_id():
@@ -41,11 +45,6 @@ class ShipFactory(object):
 
 
 class Ship:
-
-    # TODO: remove constants, add variables, shared ones
-    # shared among all ship objects
-    min_size = 60
-    max_size = 180
 
     def __init__(self, unique_id, size=None):
         self.unique_id = unique_id
@@ -59,7 +58,7 @@ class Ship:
 
         # The size indicates the ship size, unable to identify suitable scale
         if size is None:
-            self.size = random.randrange(60, 180)
+            self.size = random.randrange(SHIP_MIN_SIZE, SHIP_MAX_SIZE)
         else:
             self.size = size
 
@@ -73,31 +72,3 @@ class Ship:
     def __str__(self):
         return "S{}(sz={}, ur={}, c={:.3f})".format(self.unique_id, self.size, self.cargo_type_urgency, self.cost)
 
-        #Learning, relationship between size and cost
-            #personal drived fromt he size
-            #cost per minute when waiting
-#    @classmethod
-#    def init_for_factory(cls, filename):
-#        "Initialize MyData from a file"
-#        data = open(filename).readlines()
-#        return cls(data)
-
-#    def small_size(self):
-#        self.size = random.randrange(60,80)
-#        self.cost = (abs (self.size/10))*(30) * abs(self.size*0.05)
-#        return self
-#
-#    def large_size(self):
-#        self.size = random.randrange(150,180)
-#        self.cost = (abs (self.size/10))*(30) * abs(self.size*0.05)
-#        return self
-#
-#    def medium_size(self):
-#        self.size = random.randrange(120,140)
-#        self.cost = (abs (self.size/10))*(30) * abs(self.size*0.05)
-#        return self
-#
-#    def random_size(self):
-#        self.size = random.randrange(60,180)
-#        self.cost = (abs (self.size/10))*(30) * abs(self.size*0.05)
-#        return self
