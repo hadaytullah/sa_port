@@ -18,13 +18,9 @@ class MajoritySmallShipsContext (BaseContext):
             isSmall = True if random.randrange(0,100) < 90 else False # less probability for larger ships
 
             if isSmall:
-                self.ships_arrived.append(ShipFactory.factory('Small', self.ship_unique_id))
-                self.ship_unique_id += 1
+                self.ships_arrived.append(ShipFactory.factory('Small'))
             else:
-                self.ships_arrived.append(ShipFactory.factory('Large', self.ship_unique_id))
-                self.ship_unique_id += 1
-
-
+                self.ships_arrived.append(ShipFactory.factory('Large'))
 
     def finish_step(self, **kwargs):
         pass

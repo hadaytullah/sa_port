@@ -18,11 +18,9 @@ class MajorityLargeShipsContext (BaseContext):
         if self.add_new_ship(): #traffic density dictates this choice
             isLarge = True if random.randrange(0,100) < 90 else False # less probability for larger ships
             if isLarge:
-                self.ships_arrived.append(ShipFactory.factory('Large', self.ship_unique_id))
-                self.ship_unique_id += 1
+                self.ships_arrived.append(ShipFactory.factory('Large'))
             else:
-                self.ships_arrived.append(ShipFactory.factory('Small', self.ship_unique_id))
-                self.ship_unique_id += 1
+                self.ships_arrived.append(ShipFactory.factory('Small'))
 
     def finish_step(self, **kwargs):
         pass

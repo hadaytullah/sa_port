@@ -16,7 +16,6 @@ class BaseContext(AbstractContext):
         super().__init__()
         self.context_name = 'Base context'
         self.ships_arrived = []
-        self.ship_unique_id = 1
         self.traffic_density = self.TRAFFIC_LOW
 
     def add_new_ship(self):

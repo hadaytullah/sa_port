@@ -1,32 +1,51 @@
 import random
 
+
 class ShipFactory(object):
-    # Create based on class name:
-    def factory(type,unique_id):
+
+    # Unique ID of the next created ship.
+    ship_id = 1
+
+    @staticmethod
+    def factory(ship_type):
+        unique_id = ShipFactory.next_ship_id()
+
         #return eval(type + "()")
-        if type == "Small":
+        if ship_type == "Small":
             ship = Ship(unique_id)
-            ship.size = random.randrange(60,80)
-            ship.cost = (abs (ship.size/10))*(30) * abs(ship.size*0.05)
+            ship.size = random.randrange(60, 80)
+            ship.cost = (abs(ship.size / 10)) * 30 * abs(ship.size * 0.05)
             return ship
 
-        elif type == "Medium":
+        elif ship_type == "Medium":
             ship = Ship(unique_id)
-            ship.size = random.randrange(120,140)
-            ship.cost = (abs (ship.size/10))*(30) * abs(ship.size*0.05)
+            ship.size = random.randrange(120, 140)
+            ship.cost = (abs(ship.size / 10)) * 30 * abs(ship.size * 0.05)
             return ship
 
-        elif type == "Large":
+        elif ship_type == "Large":
             ship = Ship(unique_id)
-            ship.size = random.randrange(150,180)
-            ship.cost = (abs (ship.size/10))*(30) * abs(ship.size*0.05)
+            ship.size = random.randrange(150, 180)
+            ship.cost = (abs(ship.size / 10)) * 30 * abs(ship.size * 0.05)
+            return ship
+
+        elif type(ship_type) == int:
+            ship = Ship(unique_id)
+            ship.size = ship_type
+            ship.cost = (abs(ship.size / 10)) * 30 * abs(ship.size * 0.05)
             return ship
 
         else:
             ship = Ship(unique_id)
             return ship
 
-    factory = staticmethod(factory)
+    @staticmethod
+    def next_ship_id():
+        ship_id = ShipFactory.ship_id
+        ShipFactory.ship_id += 1
+        print(ShipFactory.ship_id)
+        return ship_id
+
 
 class Ship: #AgentCoopa(Agent):
 

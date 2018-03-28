@@ -14,20 +14,13 @@ class RandomDistributionContext(BaseContext):
 
         if self.add_new_ship():
             if random.choice([True, False]): #faster solution bool(random.getrandbits(1))
-                self.ships_arrived.append(ShipFactory.factory('Large', self.ship_unique_id))
-                self.ship_unique_id += 1
-
+                self.ships_arrived.append(ShipFactory.factory('Large'))
             elif random.choice([True, False]): #faster solution bool(random.getrandbits(1))
-                self.ships_arrived.append(ShipFactory.factory('Medium', self.ship_unique_id))
-                self.ship_unique_id += 1
-
+                self.ships_arrived.append(ShipFactory.factory('Medium'))
             elif random.choice([True, False]): #faster solution bool(random.getrandbits(1))
-                self.ships_arrived.append(ShipFactory.factory('Small', self.ship_unique_id))
-                self.ship_unique_id += 1
-
+                self.ships_arrived.append(ShipFactory.factory('Small'))
             else:
-                self.ships_arrived.append(ShipFactory.factory('Any', self.ship_unique_id))
-                self.ship_unique_id += 1
+                self.ships_arrived.append(ShipFactory.factory('Any'))
 
     def finish_step(self, **kwargs):
         pass
