@@ -8,36 +8,27 @@ class ShipFactory(object):
 
     @staticmethod
     def factory(ship_type):
-        unique_id = ShipFactory.next_ship_id()
+        """Create a new ship.
 
+        :param ship_type:
+            If ship type is ``Small``, ``Medium`` or ``Large``, creates a ship in that size category. If ship type is
+            an integer, creates a ship with that exact size. Otherwise creates a random ship.
+        """
+        unique_id = ShipFactory.next_ship_id()
+        return Ship(unique_id, ShipFactory.get_ship_size(ship_type))
+
+    @staticmethod
+    def get_ship_size(ship_type):
         # return eval(type + "()")
         if ship_type == "Small":
-            ship = Ship(unique_id)
-            ship.size = random.randrange(60, 80)
-            ship.cost = (abs(ship.size / 10)) * 30 * abs(ship.size * 0.05)
-            return ship
-
-        elif ship_type == "Medium":
-            ship = Ship(unique_id)
-            ship.size = random.randrange(120, 140)
-            ship.cost = (abs(ship.size / 10)) * 30 * abs(ship.size * 0.05)
-            return ship
-
-        elif ship_type == "Large":
-            ship = Ship(unique_id)
-            ship.size = random.randrange(150, 180)
-            ship.cost = (abs(ship.size / 10)) * 30 * abs(ship.size * 0.05)
-            return ship
-
-        elif type(ship_type) == int:
-            ship = Ship(unique_id)
-            ship.size = ship_type
-            ship.cost = (abs(ship.size / 10)) * 30 * abs(ship.size * 0.05)
-            return ship
-
-        else:
-            ship = Ship(unique_id)
-            return ship
+            return random.randrange(60, 80)
+        if ship_type == "Medium":
+            return random.randrange(120, 140)
+        if ship_type == "Large":
+            return random.randrange(150, 180)
+        if type(ship_type) == int:
+            return ship_type
+        return random.randint(Ship.min_size, Ship.max_size)
 
     @staticmethod
     def next_ship_id():
@@ -46,37 +37,34 @@ class ShipFactory(object):
         return ship_id
 
 
-class Ship: #AgentCoopa(Agent):
+class Ship:
 
-    #TODO: remove constants, add variables, shared ones
-    #shared among all ship objects
+    # TODO: remove constants, add variables, shared ones
+    # shared among all ship objects
     min_size = 60
     max_size = 180
 
-    def __init__(self, unique_id):#, model):
-        #super().__init__(unique_id, model)
+    def __init__(self, unique_id, size=None):
         self.unique_id = unique_id
-        self.distance = random.randrange(100);
+        self.distance = random.randrange(100)
 
-        self.max_speed_kmh = random.randrange(16,25) #kilometers per hour
+        self.max_speed_kmh = random.randrange(16, 25)  # kilometers per hour
 
-        #urgency indicate the cargo type, fruits and vegies needs to be transfered quickly
-        #1: less urgest, 20:most urgest
-        self.cargo_type_urgency = random.randrange(1,20)
+        # urgency indicate the cargo type, fruits and veggies needs to be transferred quickly
+        # 1: less urgest, 20:most urgest
+        self.cargo_type_urgency = random.randrange(1, 20)
 
         # The size indicates the ship size, unable to identify suitable scale
-        self.size = random.randrange(60,180)
-        #self.cost = 0
+        if size is None:
+            self.size = random.randrange(60, 180)
+        else:
+            self.size = size
 
-        #self.random_size()
+        # cost per minute, waiting or travelling
+        # cost = crew cost + fuel cost
+        self.cost = (self.size ** 2) * 0.15
 
-        #random.randrange(60,180) # indirectly represents the time to unload
-
-        #cost per minute, waiting or travelling
-        #cost = crew cost + fuel cost
-        self.cost = (abs (self.size/10))*(30) * abs(self.size*0.05)
-
-        #changing attributes, should not be here, it is not a property of the ship
+        # changing attributes, should not be here, it is not a property of the ship
         self.wait = 0
 
         #Learning, relationship between size and cost
