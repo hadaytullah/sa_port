@@ -68,6 +68,9 @@ class Ship:
         # changing attributes, should not be here, it is not a property of the ship
         self.wait = 0
 
+    def __str__(self):
+        return "S{}(sz={}, ur={}, c={:.3f})".format(self.unique_id, self.size, self.cargo_type_urgency, self.cost)
+
         #Learning, relationship between size and cost
             #personal drived fromt he size
             #cost per minute when waiting

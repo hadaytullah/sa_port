@@ -36,10 +36,8 @@ class Terminal:
                 self.ship_on_dock = let_inside_ship
                 self.docked_ship_processed = self.ship_on_dock.size + (self.ship_on_dock.distance * 60/self.ship_on_dock.max_speed_kmh)
 
-                self.log('Serving the ship %i of size %i at %i km with speed of %i kmh' %(self.ship_on_dock.unique_id,
-                                                                                          self.ship_on_dock.size, self.ship_on_dock.distance, self.ship_on_dock.max_speed_kmh));
-                self.process()
-                self.served_ships.append(arrived.pop(let_inside_index));
+                self.log('Serving ship: {}'.format(self.ship_on_dock))
+                self.served_ships.append(arrived.pop(let_inside_index))
 
                 for index, waiting_ship in enumerate(arrived):
                     waiting_ship.wait += 1
@@ -52,7 +50,7 @@ class Terminal:
         #print ('Serving the ship %i of size %i at %i km with speed of %i kmh' %(ship.unique_id, ship.size, ship.distance, ship.max_speed_kmh));
         if self.ship_on_dock is not None:
             if self.docked_ship_processed > 0:
-                self.log('Still Serving {}'.format(self.ship_on_dock.unique_id))
+                self.log('Still Serving {}'.format(self.ship_on_dock))
                 self.docked_ship_processed -= self.processing_capacity
             else:
                 self.ship_on_dock  = None
