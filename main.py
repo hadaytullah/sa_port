@@ -6,6 +6,7 @@ from mape.strategies.strategy_closest_first import Strategy as StrategyClosest
 from base_system.context.random_distribution import RandomDistributionContext
 from base_system.context.majority_small_ships import MajoritySmallShipsContext
 from base_system.context.majority_large_ships import MajorityLargeShipsContext
+from base_system.context.flexible import FlexibleContext
 import simulation
 
 
@@ -21,7 +22,7 @@ if __name__ == "__main__":
     n_agents = args.agents
     steps = args.steps
 
-    ctx = MajoritySmallShipsContext()
+    ctx = FlexibleContext([0.3, 0.3])
     ctx.set_traffic_density(ctx.TRAFFIC_LOW)
     agent_kwargs = {'strategy': StrategyClosest(), 'ctx': ctx}
     agents = simulation.create_terminals(n_agents, **agent_kwargs)
