@@ -87,7 +87,7 @@ class Simulation():
             #evaluation.report(ports)
 
         for a in self.agents:
-            print('{}: {} minutes'.format(self.evaluation.evaluation_name, self.evaluation.evaluate(a)))
+            print('{}: {} {}'.format(self.evaluation.evaluation_name, self.evaluation.evaluate(a), self.evaluation.evaluation_unit))
         print('Ships still waiting: {}'.format(len(self.ctx.ships_arrived)))
 
     def end(self, *args, **kwargs):

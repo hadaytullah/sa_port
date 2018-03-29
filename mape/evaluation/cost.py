@@ -5,6 +5,7 @@ class Cost(AbstractEvaluation):
     def __init__(self):
         super().__init__()
         self.evaluation_name = "Average Cost"
+        self.evaluation_unit = "Euro(s)"
         self.maximize = False
 
 
@@ -26,7 +27,7 @@ class Cost(AbstractEvaluation):
 
                 #calculating average
         average_cost = cost_sum/(60 * ships_count)
-        print ("Average Cost: %f €" %average_cost)
+        #print ("Average Cost: %f €" %average_cost)
         #else:
         #    print ('No average, no ship served.')
         return average_cost

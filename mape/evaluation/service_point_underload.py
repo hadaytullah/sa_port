@@ -6,6 +6,7 @@ class ServicePointUnderLoad(AbstractEvaluation):
     def __init__(self):
         super().__init__()
         self.evaluation_name = "Service Point Overload"
+        self.evaluation_unit = "?"
         self.maximize = False
 
 
