@@ -8,7 +8,7 @@ import random
 #            let_inside_index = index
 #    return let_inside_ship, let_inside_index
 
-class Strategy:
+class RandomFirstStrategy:
     def __init__(self):
         self.meta_data = StrategyMetaData()
         self.meta_data.influence_wait_time = 0 #don't know,

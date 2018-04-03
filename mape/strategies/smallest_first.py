@@ -8,7 +8,7 @@
 #            let_inside_index = index
 #    return let_inside_ship, let_inside_index
 
-class Strategy:
+class SmallestFirstStrategy:
     def __init__(self):
         self.meta_data = StrategyMetaData()
         self.meta_data.influence_wait_time = -1 #wait time decreasing, weight

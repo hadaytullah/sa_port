@@ -1,4 +1,4 @@
-class Strategy:
+class ClosestSmallestFirstStrategy:
     #TODO: META data for decision making at Planning or META-SA layer
     #context = [ContextA, ContextB]
     #quality = [5,10,1]
