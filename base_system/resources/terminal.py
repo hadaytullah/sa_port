@@ -1,6 +1,6 @@
 import random
 
-
+#May be called Berths? https://en.wikipedia.org/wiki/Berth_(moorings)
 class Terminal:
     """Terminal which serves ships by unloading their cargo.
     """
@@ -16,8 +16,12 @@ class Terminal:
         self.capacity = self.processing_capacity * (24*60) * 0.75
 
         self.served_ships = []
-
+        #TODO: Cranes
         # self.resources = 0  # staff
+
+        #Cranes part of the terminal. It could be objects, but lets see if more properties for cranes become desirable.
+        self.cranes_count = random.randrange(1,4)
+
         self.ship_on_dock = None
         self.docked_ship_processed = 0
 
