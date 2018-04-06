@@ -5,13 +5,18 @@ import random
 from base_system.resources.terminal import Terminal
 
 
-def create_terminals(n_terminals, **kwargs):
+def create_terminals(n_terminals, add_neighbors=True, **kwargs):
     """Convenience function to create a number of terminals with given kwargs.
     """
     agents = []
     for i in range(n_terminals):
         agent_name = "T{:0>2}".format(i + 1)
         agents.append(Terminal(name=agent_name, **kwargs))
+    if add_neighbors:
+        for a in agents:
+            for b in agents:
+                if a.name != b.name:
+                    a.add_neighbor(b.name, b, None)
     return agents
 
 
