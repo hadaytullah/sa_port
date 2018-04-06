@@ -3,6 +3,7 @@ from mape.strategies.strategy_meta_data import StrategyMetaData
 
 class ClosestFirstStrategy:
     def __init__(self):
+        self.name = 'ClosestFirstStrategy'
         self.meta_data = StrategyMetaData()
         self.meta_data.influence_wait_time = -1  # wait time decreasing, weight
         self.meta_data.influence_cost = -1  # cost reducing

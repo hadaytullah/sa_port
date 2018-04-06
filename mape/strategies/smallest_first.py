@@ -1,3 +1,4 @@
+from mape.strategies.strategy_meta_data import StrategyMetaData
 
 #def strategy(arriving):
 #    let_inside_ship = arriving[0];
@@ -10,6 +11,7 @@
 
 class SmallestFirstStrategy:
     def __init__(self):
+        self.name = 'SmallestFirstStrategy'
         self.meta_data = StrategyMetaData()
         self.meta_data.influence_wait_time = -1 #wait time decreasing, weight
         self.meta_data.influence_cost = -1 #cost reducing

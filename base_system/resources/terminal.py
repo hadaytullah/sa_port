@@ -1,14 +1,15 @@
 import random
 
-
+from mape.mape import Mape
 # May be called Berths? https://en.wikipedia.org/wiki/Berth_(moorings)
-class Terminal:
+class Terminal(Mape):
     """Terminal which serves ships by unloading their cargo.
     """
-    def __init__(self, strategy, ctx, name=None):
+    def __init__(self, strategy_list, ctx, evaluation_list, name=None ):
+        super().__init__(strategy_list, evaluation_list)
         self._name = 'T00' if name is None else name
         self.ctx = ctx
-        self.strategy = strategy
+        self.strategy = strategy_list[0] if len(strategy_list) > 0 else None
         self._neighbors = {}
         # per minute load processing
         self.processing_capacity = 5
@@ -20,6 +21,18 @@ class Terminal:
         self.cranes_count = random.randrange(1, 4)
         self.ship_on_dock = None
         self.docked_ship_processed = 0
+
+    #overridded methods
+    def _get_monitoring_data(self):
+        return 23 #TODO
+
+    #overridded methods
+    def _set_strategy(self, strategy):
+        self.strategy = strategy
+
+    #overridded methods
+    def _get_id(self):
+        return self._name
 
     @property
     def name(self):
@@ -69,28 +82,29 @@ class Terminal:
         """Base function for the agent to execute some actions during one simulation step.
         """
         if self.ship_on_dock is not None:
-            return self.process()
+            self.process()
+        else:
+            arrived = self.ctx.get_arrived()
+            if len(arrived) > 0:
+                let_inside_ship, let_inside_index = self.strategy.apply(arrived)
 
-        arrived = self.ctx.get_arrived()
-        if len(arrived) > 0:
-            let_inside_ship, let_inside_index = self.strategy.apply(arrived)
+                self.ship_on_dock = let_inside_ship
+                self.docked_ship_processed = self.ship_on_dock.size + (self.ship_on_dock.distance * 60/self.ship_on_dock.max_speed_kmh)
 
-            self.ship_on_dock = let_inside_ship
-            self.docked_ship_processed = self.ship_on_dock.size + (self.ship_on_dock.distance * 60/self.ship_on_dock.max_speed_kmh)
+                self.log('Serving ship: {}'.format(self.ship_on_dock))
+                self.broadcast("Let inside ship: {}".format(self.ship_on_dock))
+                self.served_ships.append(arrived.pop(let_inside_index))
 
-            self.log('Serving ship: {}'.format(self.ship_on_dock))
-            self.broadcast("Let inside ship: {}".format(self.ship_on_dock))
-            self.served_ships.append(arrived.pop(let_inside_index))
-
-            for index, waiting_ship in enumerate(arrived):
-                waiting_ship.wait += 1
-                # current_ship.wait + let_inside_ship.size + (let_inside_ship.distance* 60/let_inside_ship.max_speed_kmh)
-                # print('Sever Ships:%d' %len(self.served_ships))
+                for index, waiting_ship in enumerate(arrived):
+                    waiting_ship.wait += 1
+                    # current_ship.wait + let_inside_ship.size + (let_inside_ship.distance* 60/let_inside_ship.max_speed_kmh)
+                    # print('Sever Ships:%d' %len(self.served_ships))
+        super(Terminal, self).step()
 
     def process(self):
         if self.ship_on_dock is not None:
             if self.docked_ship_processed > 0:
-                self.log('Still Serving {}'.format(self.ship_on_dock))
+                #self.log('Still Serving {}'.format(self.ship_on_dock))
                 self.docked_ship_processed -= self.processing_capacity
             else:
                 self.ship_on_dock = None

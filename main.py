@@ -29,7 +29,10 @@ if __name__ == "__main__":
 
     ctx = FlexibleContext([0.3, 0.3])
     ctx.set_traffic_density(ctx.TRAFFIC_LOW)
-    agent_kwargs = {'strategy': ClosestFirstStrategy(), 'ctx': ctx}
+    agent_kwargs = {'strategy_list': [RandomFirstStrategy(), ClosestFirstStrategy(), ClosestSmallestFirstStrategy()],
+                    'ctx': ctx,
+                    'evaluation_list':[AverageWait(), ShipsSatisfaction()]
+                   }
     agents = simulation.create_terminals(n_agents, **agent_kwargs)
     #evaluation = AverageWait()
     evaluation = ShipsSatisfaction()

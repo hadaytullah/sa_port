@@ -1,7 +1,12 @@
+from mape.strategies.strategy_meta_data import StrategyMetaData
+
 class ClosestSmallestFirstStrategy:
     #TODO: META data for decision making at Planning or META-SA layer
     #context = [ContextA, ContextB]
     #quality = [5,10,1]
+
+    def __init__(self):
+        self.name = 'ClosestSmallestFirstStrategy'
 
     def apply(self, arriving):
         #let_inside_ship = arriving[0];

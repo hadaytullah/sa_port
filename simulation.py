@@ -91,8 +91,8 @@ class Simulation():
             self._finish_step(**kwargs)
             #evaluation.report(ports)
 
-        for a in self.agents:
-            print('{} {}: {} {}'.format(a.name, self.evaluation.evaluation_name, self.evaluation.evaluate(a), self.evaluation.evaluation_unit))
+        #for a in self.agents:
+        #    print('{} {}: {} {}'.format(a.name, self.evaluation.evaluation_name, self.evaluation.evaluate(a), self.evaluation.evaluation_unit))
         print('Ships still waiting: {}'.format(len(self.ctx.ships_arrived)))
 
     def end(self, *args, **kwargs):

@@ -1,3 +1,5 @@
+from mape.strategies.strategy_meta_data import StrategyMetaData
+
 import random
 #def strategy(arriving):
 #    let_inside_ship = arriving[0];
@@ -9,7 +11,9 @@ import random
 #    return let_inside_ship, let_inside_index
 
 class RandomFirstStrategy:
+
     def __init__(self):
+        self.name = 'RandomFirstStrategy'
         self.meta_data = StrategyMetaData()
         self.meta_data.influence_wait_time = 0 #don't know,
         self.meta_data.influence_cost = 0 #don't know,
