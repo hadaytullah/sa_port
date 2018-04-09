@@ -1,1 +1,1 @@
-__all__ = ['port_model', 'ship']
+__all__ = ['port_model', 'ship', 'terminal']

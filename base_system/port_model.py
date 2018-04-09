@@ -2,9 +2,9 @@
 #This is a second version where each step indicates one minute in time
 
 import random
-import datetime, threading
+
 from base_system.ship import Ship
-from base_system.resources.terminal import Terminal
+from base_system.terminal import Terminal
 
 
 class PortModel:

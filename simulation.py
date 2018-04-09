@@ -2,7 +2,7 @@
 """
 import random
 
-from base_system.resources.terminal import Terminal
+from base_system.terminal import Terminal
 
 
 def create_terminals(n_terminals, add_neighbors=True, **kwargs):
