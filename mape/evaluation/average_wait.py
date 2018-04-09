@@ -1,4 +1,6 @@
 from mape.evaluation.abstract_evaluation import AbstractEvaluation
+from mape.evaluation.meta_data import EvaluationMetaData
+import operator
 
 
 class AverageWait(AbstractEvaluation):
@@ -8,6 +10,7 @@ class AverageWait(AbstractEvaluation):
         self.evaluation_name = "Average Ship Wait Time"
         self.evaluation_unit = "minute(s)"
         self.maximize = False
+        self.meta_data = EvaluationMetaData(10, operator.le)
 
     def evaluate_(self, ships):
         average_wait_time = 0
@@ -49,4 +52,5 @@ class AverageWait(AbstractEvaluation):
         #print ("Average Wait: %f hours" %average_wait_time)
         #else:
         #    print ('No average, no ship served.')
-        return average_wait_time
+        within_threshold = self.meta_data.within_threshold(average_wait_time)
+        return average_wait_time, within_threshold

@@ -46,7 +46,7 @@ class Mape(ABC):
         #self.average_wait_time_list.append(average_wait)
         evaluation_sum = 0
         for evaluation in self._evaluation_list:
-            evaluation_value = evaluation.evaluate(self)
+            evaluation_value, within_threshold = evaluation.evaluate(self)
             evaluation_sum += evaluation_value
             print('{} {}: {} {}'.format(self.name, evaluation.evaluation_name, evaluation_value, evaluation.evaluation_unit))
 
