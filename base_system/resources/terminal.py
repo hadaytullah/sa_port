@@ -1,6 +1,8 @@
 import random
 
 from mape.mape import Mape
+
+
 # May be called Berths? https://en.wikipedia.org/wiki/Berth_(moorings)
 class Terminal(Mape):
     """Terminal which serves ships by unloading their cargo.
@@ -9,7 +11,7 @@ class Terminal(Mape):
         super().__init__(strategy_list, evaluation_list)
         self._name = 'T00' if name is None else name
         self.objective_ctx = objective_context
-        self.strategy = strategy_list[0] if len(strategy_list) > 0 else None
+        self._strategy = strategy_list[0] if len(strategy_list) > 0 else None
         self._neighbors = {}
         # per minute load processing
         self.processing_capacity = 5
@@ -33,6 +35,14 @@ class Terminal(Mape):
     #overridded methods
     def _get_id(self):
         return self._name
+
+    @property
+    def strategy(self):
+        return self._strategy
+
+    @strategy.setter
+    def strategy(self, new_strategy):
+        self._strategy = new_strategy
 
     @property
     def name(self):
