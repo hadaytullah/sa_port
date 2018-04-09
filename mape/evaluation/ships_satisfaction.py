@@ -1,4 +1,7 @@
 from mape.evaluation.abstract_evaluation import AbstractEvaluation
+from mape.evaluation.meta_data import EvaluationMetaData
+import operator
+
 
 class ShipsSatisfaction(AbstractEvaluation):
     """Measures satisfaction of the ships. Percentage of ships whose goals and constraints were satisfied.
@@ -8,6 +11,7 @@ class ShipsSatisfaction(AbstractEvaluation):
         self.evaluation_name = "Ships Satisfaction"
         self.evaluation_unit = "%"
         self.maximize = True
+        self.meta_data = EvaluationMetaData(10, operator.ge)
 
 
     def evaluate(self, terminal):
@@ -30,4 +34,5 @@ class ShipsSatisfaction(AbstractEvaluation):
         #
         satisfaction = (satisfied_ships/ships_count) * 100
         #print ('Ships satisfied : %i ' %satisfaction)
-        return satisfaction
+        within_threshold = self.meta_data.within_threshold(satisfaction)
+        return satisfaction, within_threshold
