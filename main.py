@@ -2,7 +2,6 @@ import argparse
 
 from mape.evaluation.average_wait import AverageWait
 from mape.evaluation.ships_satisfaction import ShipsSatisfaction
-#TODO: define abstract interface and change the names in the strategies files
 
 from mape.strategies.random_first import RandomFirstStrategy
 from mape.strategies.closest_first import ClosestFirstStrategy
@@ -31,8 +30,8 @@ if __name__ == "__main__":
     ctx.set_traffic_density(ctx.TRAFFIC_LOW)
     agent_kwargs = {'strategy_list': [RandomFirstStrategy(), ClosestFirstStrategy(), ClosestSmallestFirstStrategy()],
                     'objective_context': ctx,
-                    'evaluation_list':[AverageWait(), ShipsSatisfaction()]
-                   }
+                    'evaluation_list': [AverageWait(), ShipsSatisfaction()]
+                    }
     agents = simulation.create_terminals(n_agents, **agent_kwargs)
     #evaluation = AverageWait()
     evaluation = ShipsSatisfaction()
