@@ -7,6 +7,8 @@ from mape.trend import Trend
 
 def wrap_step(func):
     """Wrapper to wrap base system's step function for MAPE functionality.
+
+    The object which method is wrapped must have implemented `prestep` and `poststep` functions.
     """
     def call(*args, **kwargs):
         # args[0] is the instance of the object, i.e. self.
