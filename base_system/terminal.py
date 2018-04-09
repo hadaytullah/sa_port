@@ -26,6 +26,9 @@ class Terminal(Mape, Agent):
         self.ship_on_dock = None
         self.docked_ship_processed = 0
 
+        # Initialize knowledge base
+        self._kb.create('neighbors', {})
+
     def _get_monitoring_data(self):
         return 23  # TODO
 
@@ -47,6 +50,25 @@ class Terminal(Mape, Agent):
         Set at the 75% of the whole processing capacity, rest of the time goes into maintenance, breaks etc.
         """
         return self._capacity
+
+    def add_neighbor(self, nb_name, agent, meta_information=None):
+        """Add neighbor for the agent with given dictionary of meta information.
+
+        :param str nb_name: Name of the neighbor
+        :param obj agent:
+            Reference to the agent, it is added to the meta information with the key 'agent'. This replaces current
+            key 'agent' from meta information, if such exists.
+        :param dict meta_information:
+            Dictionary of meta information about the agent. If the parameter is ``None`` a new dictionary is created.
+
+        :raises: :py:exc:`KeyError` if the name of the new neighbor is already in the neighbors.
+        """
+        super().add_neighbor(nb_name, agent, meta_information)
+        if meta_information is None:
+            meta_information = {}
+        meta_information['agent'] = agent
+        kb_neighbors = self._kb.read('neighbors')
+        kb_neighbors[nb_name] = meta_information
 
     def step(self, **kwargs):
         """Base function for the agent to execute some actions during one simulation step.

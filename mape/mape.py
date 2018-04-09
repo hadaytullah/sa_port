@@ -1,5 +1,7 @@
 import random
 
+from knowledge_base import DictKB
+
 from mape.trend import Trend
 
 
@@ -10,6 +12,7 @@ class Mape:
         self._monitoring_data = None
         self._strategy_list = strategy_list
         self._evaluation_list = evaluation_list
+        self._kb = DictKB()
         #self.id = random.randrange(22,90) #temporary fix, have to merge with terminal id
         self.clock = 0
         self._evaluation = 0

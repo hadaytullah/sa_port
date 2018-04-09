@@ -17,6 +17,7 @@ class KnowledgeBase:
         """Delete a value from the knowledge base."""
         raise NotImplementedError
 
+
 class DictKB(KnowledgeBase):
     """Dictionary implementation of the knowledge base."""
     def __init__(self):
