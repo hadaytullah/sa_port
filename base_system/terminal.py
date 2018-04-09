@@ -23,8 +23,8 @@ class Terminal(Mape, Agent):
 
         # Cranes part of the terminal. It could be objects, but lets see if more properties for cranes become desirable.
         self.cranes_count = random.randrange(1, 4)
-        self.ship_on_dock = None
-        self.docked_ship_processed = 0
+        self.ship = None
+        self.ship_processed = 0
 
         # Initialize knowledge base
         self._kb.create('neighbors', {})
@@ -76,18 +76,18 @@ class Terminal(Mape, Agent):
     def step(self, **kwargs):
         """Base function for the agent to execute some actions during one simulation step.
         """
-        if self.ship_on_dock is not None:
+        if self.ship is not None:
             self.process()
         else:
             arrived = self.objective_ctx.get_arrived()
             if len(arrived) > 0:
                 let_inside_ship, let_inside_index = self.strategy.apply(arrived)
 
-                self.ship_on_dock = let_inside_ship
-                self.docked_ship_processed = self.ship_on_dock.size + (self.ship_on_dock.distance * 60/self.ship_on_dock.max_speed_kmh)
+                self.ship = let_inside_ship
+                self.ship_processed = self.ship.size + (self.ship.distance * 60 / self.ship.max_speed_kmh)
 
-                self.log('Serving ship: {}'.format(self.ship_on_dock))
-                self.broadcast("Let inside ship: {}".format(self.ship_on_dock))
+                self.log('Serving ship: {}'.format(self.ship))
+                self.broadcast("Let inside ship: {}".format(self.ship))
                 self.served_ships.append(arrived.pop(let_inside_index))
 
                 for index, waiting_ship in enumerate(arrived):
@@ -97,13 +97,13 @@ class Terminal(Mape, Agent):
         # super(Terminal, self).step()
 
     def process(self):
-        if self.ship_on_dock is not None:
-            if self.docked_ship_processed > 0:
+        if self.ship is not None:
+            if self.ship_processed > 0:
                 #self.log('Still Serving {}'.format(self.ship_on_dock))
-                self.docked_ship_processed -= self.processing_capacity
+                self.ship_processed -= self.processing_capacity
             else:
-                self.ship_on_dock = None
-                self.docked_ship_processed = 0
+                self.ship = None
+                self.ship_processed = 0
 
     def finish_step(self, **kwargs):
         """Called on each simulation step after all agents in the simulation have acted.
