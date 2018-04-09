@@ -9,6 +9,7 @@ def wrap_step(func):
     """Wrapper to wrap base system's step function for MAPE functionality.
     """
     def call(*args, **kwargs):
+        # args[0] is the instance of the object, i.e. self.
         args[0].prestep(func, *args, **kwargs)
         result = func(*args, **kwargs)
         args[0].poststep(result, func, *args, **kwargs)
