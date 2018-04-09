@@ -5,10 +5,10 @@ from mape.mape import Mape
 class Terminal(Mape):
     """Terminal which serves ships by unloading their cargo.
     """
-    def __init__(self, strategy_list, ctx, evaluation_list, name=None ):
+    def __init__(self, strategy_list, objective_context, evaluation_list, name=None):
         super().__init__(strategy_list, evaluation_list)
         self._name = 'T00' if name is None else name
-        self.ctx = ctx
+        self.objective_ctx = objective_context
         self.strategy = strategy_list[0] if len(strategy_list) > 0 else None
         self._neighbors = {}
         # per minute load processing
@@ -84,7 +84,7 @@ class Terminal(Mape):
         if self.ship_on_dock is not None:
             self.process()
         else:
-            arrived = self.ctx.get_arrived()
+            arrived = self.objective_ctx.get_arrived()
             if len(arrived) > 0:
                 let_inside_ship, let_inside_index = self.strategy.apply(arrived)
 

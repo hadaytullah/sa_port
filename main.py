@@ -8,10 +8,10 @@ from mape.strategies.random_first import RandomFirstStrategy
 from mape.strategies.closest_first import ClosestFirstStrategy
 from mape.strategies.closest_smallest_first import ClosestSmallestFirstStrategy
 
-from base_system.context.random_distribution import RandomDistributionContext
-from base_system.context.majority_small_ships import MajoritySmallShipsContext
-from base_system.context.majority_large_ships import MajorityLargeShipsContext
-from base_system.context.flexible import FlexibleContext
+from base_system.context.random_distribution import RandomDistributionObjectiveContext
+from base_system.context.majority_small_ships import MajoritySmallShipsObjectiveContext
+from base_system.context.majority_large_ships import MajorityLargeShipsObjectiveContext
+from base_system.context.flexible import FlexibleObjectiveContext
 import simulation
 
 
@@ -27,10 +27,10 @@ if __name__ == "__main__":
     n_agents = args.agents
     steps = args.steps
 
-    ctx = FlexibleContext([0.3, 0.3])
+    ctx = FlexibleObjectiveContext([0.3, 0.3])
     ctx.set_traffic_density(ctx.TRAFFIC_LOW)
     agent_kwargs = {'strategy_list': [RandomFirstStrategy(), ClosestFirstStrategy(), ClosestSmallestFirstStrategy()],
-                    'ctx': ctx,
+                    'objective_context': ctx,
                     'evaluation_list':[AverageWait(), ShipsSatisfaction()]
                    }
     agents = simulation.create_terminals(n_agents, **agent_kwargs)

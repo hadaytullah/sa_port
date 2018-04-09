@@ -1,10 +1,10 @@
 import random
 
-from base_system.context.base_context import BaseContext
+from base_system.context.base_context import BaseObjectiveObjectiveContext
 from base_system.ship import ShipFactory
 
 
-class FlexibleContext(BaseContext):
+class FlexibleObjectiveContext(BaseObjectiveObjectiveContext):
     """Flexible context which may change its distribution of ships.
 
     :param tuple distribution:

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class AbstractContext(ABC):
+class AbstractObjectiveContext(ABC):
 
     def __init__(self):
         super().__init__()

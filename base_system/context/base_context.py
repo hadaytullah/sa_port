@@ -1,11 +1,11 @@
 import random
 
-from base_system.context.abstract_context import AbstractContext
+from base_system.context.abstract_context import AbstractObjectiveContext
 from base_system.ship import Ship
 from base_system.ship import ShipFactory
 
 
-class BaseContext(AbstractContext):
+class BaseObjectiveObjectiveContext(AbstractObjectiveContext):
 
     #Traffic volumes
     TRAFFIC_LOW = 'Low'
