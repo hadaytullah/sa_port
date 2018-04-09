@@ -5,6 +5,17 @@ from knowledge_base import DictKB
 from mape.trend import Trend
 
 
+def wrap_step(func):
+    """Wrapper to wrap base system's step function for MAPE functionality.
+    """
+    def call(*args, **kwargs):
+        args[0].prestep(func, *args, **kwargs)
+        result = func(*args, **kwargs)
+        args[0].poststep(result, func, *args, **kwargs)
+        return result
+    return call
+
+
 class Mape:
     average_wait_time_list = []
 
@@ -77,3 +88,14 @@ class Mape:
         print('ID {}, Clock is {}, Mape changing strategy to: {}'.format(self._get_id(), self.clock, new_strategy.name))
         # self._analyse()
         # self.strategy = new_strategy
+
+    def prestep(self, func, *args, **kwargs):
+        pass
+        #self.log("Prestep!")
+
+    def poststep(self, result, func, *args, **kwargs):
+        #self.log("Poststep wrapped!")
+        self.clock += 1
+        if self.clock % (60*6) == 0:  # every six hours
+            self._analyse()
+

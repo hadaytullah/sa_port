@@ -2,7 +2,7 @@ import random
 
 from base_system.agent import Agent
 
-from mape.mape import Mape
+from mape.mape import Mape, wrap_step
 
 
 # May be called Berths? https://en.wikipedia.org/wiki/Berth_(moorings)
@@ -54,6 +54,8 @@ class Terminal(Mape, Agent):
     def add_neighbor(self, nb_name, agent, meta_information=None):
         """Add neighbor for the agent with given dictionary of meta information.
 
+        **Adds the neighbor also into the knowledge base.**
+
         :param str nb_name: Name of the neighbor
         :param obj agent:
             Reference to the agent, it is added to the meta information with the key 'agent'. This replaces current
@@ -70,6 +72,7 @@ class Terminal(Mape, Agent):
         kb_neighbors = self._kb.read('neighbors')
         kb_neighbors[nb_name] = meta_information
 
+    @wrap_step
     def step(self, **kwargs):
         """Base function for the agent to execute some actions during one simulation step.
         """
@@ -91,7 +94,7 @@ class Terminal(Mape, Agent):
                     waiting_ship.wait += 1
                     # current_ship.wait + let_inside_ship.size + (let_inside_ship.distance* 60/let_inside_ship.max_speed_kmh)
                     # print('Sever Ships:%d' %len(self.served_ships))
-        super(Terminal, self).step()
+        # super(Terminal, self).step()
 
     def process(self):
         if self.ship_on_dock is not None:
