@@ -1,7 +1,5 @@
-import random
-
-from base_system.context.base_context import BaseObjectiveObjectiveContext
-from base_system.ship import ShipFactory
+from context.base_context import BaseObjectiveObjectiveContext
+from context.ship import ShipFactory
 
 
 class RandomDistributionObjectiveContext(BaseObjectiveObjectiveContext):

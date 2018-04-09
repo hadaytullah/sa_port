@@ -2,6 +2,7 @@ from mape.trend import Trend
 from abc import ABC, abstractmethod
 import random
 
+
 class Mape(ABC):
     average_wait_time_list = []
 

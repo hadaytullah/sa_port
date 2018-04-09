@@ -1,7 +1,7 @@
 import random
 
-from base_system.ship import ShipFactory
-from base_system.context.base_context import BaseObjectiveObjectiveContext
+from context.base_context import BaseObjectiveObjectiveContext
+from context.ship import ShipFactory
 
 
 class MajorityLargeShipsObjectiveContext(BaseObjectiveObjectiveContext):

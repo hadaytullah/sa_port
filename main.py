@@ -1,18 +1,13 @@
 import argparse
 
+from context.flexible import FlexibleObjectiveContext
+
+import simulation
 from mape.evaluation.average_wait import AverageWait
 from mape.evaluation.ships_satisfaction import ShipsSatisfaction
-
-from mape.strategies.random_first import RandomFirstStrategy
 from mape.strategies.closest_first import ClosestFirstStrategy
 from mape.strategies.closest_smallest_first import ClosestSmallestFirstStrategy
-
-from base_system.context.random_distribution import RandomDistributionObjectiveContext
-from base_system.context.majority_small_ships import MajoritySmallShipsObjectiveContext
-from base_system.context.majority_large_ships import MajorityLargeShipsObjectiveContext
-from base_system.context.flexible import FlexibleObjectiveContext
-import simulation
-
+from mape.strategies.random_first import RandomFirstStrategy
 
 if __name__ == "__main__":
     desc = "Command line script to run self-adaptive terminals simulations."

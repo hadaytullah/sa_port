@@ -3,8 +3,8 @@
 
 import random
 
-from base_system.ship import Ship
 from base_system.terminal import Terminal
+from context.ship import Ship
 
 
 class PortModel:

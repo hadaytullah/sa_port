@@ -1,8 +1,6 @@
 import random
 
-from base_system.context.abstract_context import AbstractObjectiveContext
-from base_system.ship import Ship
-from base_system.ship import ShipFactory
+from context.abstract_context import AbstractObjectiveContext
 
 
 class BaseObjectiveObjectiveContext(AbstractObjectiveContext):
