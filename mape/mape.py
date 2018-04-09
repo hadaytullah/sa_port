@@ -1,9 +1,9 @@
-from mape.trend import Trend
-from abc import ABC, abstractmethod
 import random
 
+from mape.trend import Trend
 
-class Mape(ABC):
+
+class Mape:
     average_wait_time_list = []
 
     def __init__(self, strategy_list, evaluation_list):
@@ -15,28 +15,16 @@ class Mape(ABC):
         self._evaluation = 0
 
     def step(self):
-
-
-
         self.clock += 1
-        if self.clock % (60*6) == 0: #every six hours
+        if self.clock % (60*6) == 0:  # every six hours
             self._analyse()
+        # print ('Monitoring data {}'.format(self.id))
 
-
-        #print ('Monitoring data {}'.format(self.id))
-
-    @abstractmethod
     def _get_monitoring_data(self):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
-    def _set_strategy(self, strategy):
-        pass
-
-    @abstractmethod
     def _get_id(self):
-        pass
-
+        raise NotImplementedError
 
     def _monitor(self):
         pass
@@ -83,6 +71,6 @@ class Mape(ABC):
 
     def _execute(self, new_strategy):
         print('MAPE: execute- the new strategy.')
-        print('ID {}, Clock is {}, Mape changing strategy to:{}'.format(self._get_id(),self.clock, new_strategy.name))
-            #self._analyse()
-            #self._set_strategy(new_strategy)
+        print('ID {}, Clock is {}, Mape changing strategy to: {}'.format(self._get_id(), self.clock, new_strategy.name))
+        # self._analyse()
+        # self.strategy = new_strategy

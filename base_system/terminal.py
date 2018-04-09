@@ -26,15 +26,9 @@ class Terminal(Mape, Agent):
         self.ship_on_dock = None
         self.docked_ship_processed = 0
 
-    #overridded methods
     def _get_monitoring_data(self):
-        return 23 #TODO
+        return 23  # TODO
 
-    #overridded methods
-    def _set_strategy(self, strategy):
-        self.strategy = strategy
-
-    #overridded methods
     def _get_id(self):
         return self._name
 
@@ -92,8 +86,3 @@ class Terminal(Mape, Agent):
         Suitable for, e.g., logging internal parameters, interaction between agents, etc.
         """
         pass
-
-
-
-
-
