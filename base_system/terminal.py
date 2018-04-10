@@ -3,16 +3,18 @@ import random
 from util import add_callbacks
 from base_system.agent import Agent
 from mape.mape import Mape
+from context.subjective_context import SubjectiveContext
 
 
 # May be called Berths? https://en.wikipedia.org/wiki/Berth_(moorings)
 class Terminal(Mape, Agent):
     """Terminal which serves ships by unloading their cargo.
     """
-    def __init__(self, strategy_list, objective_context, evaluation_list, name=None):
+    def __init__(self, strategy_list, objective_context, evaluation_list, perceived_attributes, name=None):
         super().__init__(strategy_list, evaluation_list)
         self._name = 'T00' if name is None else name
         self.objective_ctx = objective_context
+        self.subjective_ctx = SubjectiveContext(perceived_attributes)
         self._strategy = strategy_list[0] if len(strategy_list) > 0 else None
         self._neighbors = {}
         # per minute load processing
@@ -79,7 +81,8 @@ class Terminal(Mape, Agent):
         if self.ship is not None:
             self.process()
         else:
-            arrived = self.objective_ctx.get_arrived()
+            ctx = self.subjective_ctx.get_perceived_context(self.objective_ctx)
+            arrived = ctx['ships_arrived']
             if len(arrived) > 0:
                 let_inside_ship, let_inside_index = self.strategy.apply(arrived)
 

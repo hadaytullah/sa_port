@@ -25,7 +25,8 @@ if __name__ == "__main__":
     ctx.set_traffic_density(ctx.TRAFFIC_LOW)
     agent_kwargs = {'strategy_list': [RandomFirstStrategy(), ClosestFirstStrategy(), ClosestSmallestFirstStrategy()],
                     'objective_context': ctx,
-                    'evaluation_list': [AverageWait(), ShipsSatisfaction()]
+                    'evaluation_list': [AverageWait(), ShipsSatisfaction()],
+                    'perceived_attributes': ['ships_arrived', 'traffic_density']
                     }
     agents = simulation.create_terminals(n_agents, **agent_kwargs)
     #evaluation = AverageWait()
