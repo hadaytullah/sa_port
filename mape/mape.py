@@ -15,11 +15,22 @@ class Mape:
         self.clock = 0
         self._evaluation = 0
 
+        # calibration runs are executed to find suitable meta data,
+        # TODO, do it properly
+        self.mape_enable = True
+
 #    def init_mape(self, strategy_list, evaluation_list):
 #        self._strategy_list = strategy_list
 #        self._evaluation_list = evaluation_list
 
+    def enable_mape(self, value):
+        self.mape_enable = value
+
     def step(self):
+        #do not engage MAPE or upper level frameworka
+        if self.mape_enable is False:
+            return
+
         self.clock += 1
         if self.clock % (60*6) == 0:  # every six hours
             self._analyse()
@@ -90,6 +101,10 @@ class Mape:
         #self.log("Prestep!")
 
     def poststep(self, result, func, *args, **kwargs):
+        #do not engage MAPE or upper level frameworka
+        if self.mape_enable is False:
+            return
+
         #self.log("Poststep wrapped!")
         self.clock += 1
         if self.clock % (60*6) == 0:  # every six hours
