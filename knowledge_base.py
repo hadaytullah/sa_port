@@ -19,9 +19,10 @@ class KnowledgeBase:
 
 
 class DictKB(KnowledgeBase):
-    """Dictionary implementation of the knowledge base."""
+    """Singleton Dictionary implementation of the knowledge base."""
+    __shared_db = {}
     def __init__(self):
-        self._db = {}
+        self._db = self.__shared_db
 
     def create(self, key, value):
         if key in self._db:

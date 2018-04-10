@@ -10,12 +10,14 @@ from context.subjective_context import SubjectiveContext
 class Terminal(Mape, Agent):
     """Terminal which serves ships by unloading their cargo.
     """
-    def __init__(self, strategy_list, objective_context, evaluation_list, perceived_attributes, name=None):
-        super().__init__(strategy_list, evaluation_list)
+    def __init__(self, strategy, objective_context, evaluation, perceived_attributes, name=None):
+        super().__init__()
         self._name = 'T00' if name is None else name
         self.objective_ctx = objective_context
         self.subjective_ctx = SubjectiveContext(perceived_attributes)
-        self._strategy = strategy_list[0] if len(strategy_list) > 0 else None
+        #self._knowledge_base = DictKB()
+        #self._strategy = strategy_list[0] if len(strategy_list) > 0 else None
+        self._strategy = strategy
         self._neighbors = {}
         # per minute load processing
         self.processing_capacity = 5
@@ -29,7 +31,7 @@ class Terminal(Mape, Agent):
         self.ship_processed = 0
 
         # Initialize knowledge base
-        self._kb.create('neighbors', {})
+        #self._knowledge_base.create('neighbors', {})
 
     def _get_monitoring_data(self):
         return 23  # TODO
@@ -71,8 +73,8 @@ class Terminal(Mape, Agent):
         if meta_information is None:
             meta_information = {}
         meta_information['agent'] = agent
-        kb_neighbors = self._kb.read('neighbors')
-        kb_neighbors[nb_name] = meta_information
+        #kb_neighbors = self._knowledge_base.read('neighbors')
+        #kb_neighbors[nb_name] = meta_information
 
     @add_callbacks('prestep', 'poststep')
     def step(self, **kwargs):

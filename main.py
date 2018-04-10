@@ -1,7 +1,7 @@
 import argparse
 
 from context.flexible import FlexibleObjectiveContext
-
+from knowledge_base import DictKB
 import simulation
 from mape.evaluation.average_wait import AverageWait
 from mape.evaluation.cost import Cost
@@ -26,14 +26,33 @@ if __name__ == "__main__":
 
     ctx = FlexibleObjectiveContext([0.3, 0.3])
     ctx.set_traffic_density(ctx.TRAFFIC_LOW)
-    agent_kwargs = {'strategy_list': [RandomFirstStrategy(),
-                                      ClosestFirstStrategy(),
-                                      ClosestSmallestFirstStrategy(),
-                                      SmallestFirstStrategy()],
+
+    shared_knowledge_base = DictKB()
+
+    shared_knowledge_base.create('strategy_list',
+                                 [RandomFirstStrategy(),
+                                  ClosestFirstStrategy(),
+                                  ClosestSmallestFirstStrategy(),
+                                  SmallestFirstStrategy()])
+
+    shared_knowledge_base.create('evaluation_list',
+                                 [AverageWait(),
+                                  Cost(),
+                                  ShipsSatisfaction()])
+
+#    agent_kwargs = {'strategy_list': [RandomFirstStrategy(),
+#                                      ClosestFirstStrategy(),
+#                                      ClosestSmallestFirstStrategy(),
+#                                      SmallestFirstStrategy()],
+#                    'objective_context': ctx,
+#                    'evaluation_list': [AverageWait(),
+#                                        Cost(),
+#                                        ShipsSatisfaction()],
+#                    'perceived_attributes': ['ships_arrived', 'traffic_density']
+#                    }
+    agent_kwargs = {'strategy': RandomFirstStrategy(),
                     'objective_context': ctx,
-                    'evaluation_list': [AverageWait(),
-                                        Cost(),
-                                        ShipsSatisfaction()],
+                    'evaluation': AverageWait(),
                     'perceived_attributes': ['ships_arrived', 'traffic_density']
                     }
     agents = simulation.create_terminals(n_agents, **agent_kwargs)

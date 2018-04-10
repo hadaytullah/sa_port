@@ -8,14 +8,16 @@ from mape.trend import Trend
 class Mape:
     average_wait_time_list = []
 
-    def __init__(self, strategy_list, evaluation_list):
+    def __init__(self):
         self._monitoring_data = None
-        self._strategy_list = strategy_list
-        self._evaluation_list = evaluation_list
-        self._kb = DictKB()
+        self._knowledge_base = DictKB()
         #self.id = random.randrange(22,90) #temporary fix, have to merge with terminal id
         self.clock = 0
         self._evaluation = 0
+
+#    def init_mape(self, strategy_list, evaluation_list):
+#        self._strategy_list = strategy_list
+#        self._evaluation_list = evaluation_list
 
     def step(self):
         self.clock += 1
@@ -37,7 +39,7 @@ class Mape:
         evals = {}
         #self.average_wait_time_list.append(average_wait)
         evaluation_sum = 0
-        for evaluation in self._evaluation_list:
+        for evaluation in self._knowledge_base.read('evaluation_list'):
             evaluation_value = evaluation.evaluate(self)
             evaluation_sum += evaluation_value
             evals[evaluation] = evaluation_value
@@ -74,7 +76,7 @@ class Mape:
         for func, eval in evaluations.items():
             eval_within_threshold[func] = func.meta_data.within_threshold(eval)
 
-        new_strategy = random.choice(self._strategy_list)
+        new_strategy = random.choice(self._knowledge_base.read('strategy_list'))
         self._execute(new_strategy)
 
     def _execute(self, new_strategy):
