@@ -34,5 +34,4 @@ class ShipsSatisfaction(AbstractEvaluation):
         #
         satisfaction = (satisfied_ships/ships_count) * 100
         #print ('Ships satisfied : %i ' %satisfaction)
-        within_threshold = self.meta_data.within_threshold(satisfaction)
-        return satisfaction, within_threshold
+        return satisfaction

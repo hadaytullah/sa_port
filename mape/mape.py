@@ -34,16 +34,17 @@ class Mape:
 
     def _analyse(self):
         self._evaluation = self._get_monitoring_data()
+        evals = {}
         #self.average_wait_time_list.append(average_wait)
         evaluation_sum = 0
         for evaluation in self._evaluation_list:
-            evaluation_value, within_threshold = evaluation.evaluate(self)
+            evaluation_value = evaluation.evaluate(self)
             evaluation_sum += evaluation_value
+            evals[evaluation] = evaluation_value
             print('{} {}: {} {}'.format(self.name, evaluation.evaluation_name, evaluation_value, evaluation.evaluation_unit))
 
-
         print('Analysing..{}'.format(evaluation_sum))
-        self._plan()
+        self._plan(evals)
         # looking for a trend, increasing, decreasing.
         # decreasing is good, increasing will need adaptation
 #        trend_neutral = 0
@@ -66,10 +67,14 @@ class Mape:
 #            else:
 #                print('No need for adaptation, keep monitoring.')
 
-    def _plan(self):
+    def _plan(self, evaluations):
         print('MAPE: Plan- a new strategy.')
-        new_strategy = random.choice(self._strategy_list)
 
+        eval_within_threshold = {}
+        for func, eval in evaluations.items():
+            eval_within_threshold[func] = func.meta_data.within_threshold(eval)
+
+        new_strategy = random.choice(self._strategy_list)
         self._execute(new_strategy)
 
     def _execute(self, new_strategy):

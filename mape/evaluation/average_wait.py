@@ -52,5 +52,4 @@ class AverageWait(AbstractEvaluation):
         #print ("Average Wait: %f hours" %average_wait_time)
         #else:
         #    print ('No average, no ship served.')
-        within_threshold = self.meta_data.within_threshold(average_wait_time)
-        return average_wait_time, within_threshold
+        return average_wait_time
