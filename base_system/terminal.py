@@ -1,8 +1,8 @@
 import random
 
+from util import add_callbacks
 from base_system.agent import Agent
-
-from mape.mape import Mape, wrap
+from mape.mape import Mape
 
 
 # May be called Berths? https://en.wikipedia.org/wiki/Berth_(moorings)
@@ -72,7 +72,7 @@ class Terminal(Mape, Agent):
         kb_neighbors = self._kb.read('neighbors')
         kb_neighbors[nb_name] = meta_information
 
-    @wrap('prestep', 'poststep')
+    @add_callbacks('prestep', 'poststep')
     def step(self, **kwargs):
         """Base function for the agent to execute some actions during one simulation step.
         """
