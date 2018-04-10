@@ -4,9 +4,12 @@ from context.flexible import FlexibleObjectiveContext
 
 import simulation
 from mape.evaluation.average_wait import AverageWait
+from mape.evaluation.cost import Cost
 from mape.evaluation.ships_satisfaction import ShipsSatisfaction
+
 from mape.strategies.closest_first import ClosestFirstStrategy
 from mape.strategies.closest_smallest_first import ClosestSmallestFirstStrategy
+from mape.strategies.smallest_first import SmallestFirstStrategy
 from mape.strategies.random_first import RandomFirstStrategy
 
 if __name__ == "__main__":
@@ -23,9 +26,14 @@ if __name__ == "__main__":
 
     ctx = FlexibleObjectiveContext([0.3, 0.3])
     ctx.set_traffic_density(ctx.TRAFFIC_LOW)
-    agent_kwargs = {'strategy_list': [RandomFirstStrategy(), ClosestFirstStrategy(), ClosestSmallestFirstStrategy()],
+    agent_kwargs = {'strategy_list': [RandomFirstStrategy(),
+                                      ClosestFirstStrategy(),
+                                      ClosestSmallestFirstStrategy(),
+                                      SmallestFirstStrategy()],
                     'objective_context': ctx,
-                    'evaluation_list': [AverageWait(), ShipsSatisfaction()],
+                    'evaluation_list': [AverageWait(),
+                                        Cost(),
+                                        ShipsSatisfaction()],
                     'perceived_attributes': ['ships_arrived', 'traffic_density']
                     }
     agents = simulation.create_terminals(n_agents, **agent_kwargs)

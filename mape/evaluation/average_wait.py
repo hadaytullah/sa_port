@@ -7,8 +7,8 @@ class AverageWait(AbstractEvaluation):
 
     def __init__(self):
         super().__init__()
-        self.evaluation_name = "Average Ship Wait Time"
-        self.evaluation_unit = "minute(s)"
+        self.evaluation_name = "Average Wait Time"
+        self.evaluation_unit = "Minute"
         self.maximize = False
         self.meta_data = EvaluationMetaData(10, operator.le)
 

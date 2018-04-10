@@ -1,29 +1,31 @@
 from mape.evaluation.abstract_evaluation import AbstractEvaluation
+from mape.evaluation.meta_data import EvaluationMetaData
+import operator
 
 class Cost(AbstractEvaluation):
 
     def __init__(self):
         super().__init__()
-        self.evaluation_name = "Average Cost"
-        self.evaluation_unit = "Euro(s)"
+        self.evaluation_name = "Cost"
+        self.evaluation_unit = "€"
         self.maximize = False
+        self.meta_data = EvaluationMetaData(300, operator.le)
 
-
-    def evaluate(self, ships):
+    def evaluate(self, terminal):
         average_cost = 0
         ships_count = 0
-        for terminal in port_model.terminals:
-            ships = terminal.served_ships
-            ships_count += len(ships)
 
-            if len(ships) > 0:
-                #print("Cost")
-                average_cost = 0
-                cost_sum = 0
+        ships = terminal.served_ships
+        ships_count += len(ships)
 
-                for index, current_ship in enumerate(ships):
-                    #print (" Ship %i served in %i minutes" %(current_ship.unique_id, current_ship.wait))
-                    cost_sum += (current_ship.cost * current_ship.wait)
+        if len(ships) > 0:
+            #print("Cost")
+            average_cost = 0
+            cost_sum = 0
+
+            for index, current_ship in enumerate(ships):
+                #print (" Ship %i served in %i minutes" %(current_ship.unique_id, current_ship.wait))
+                cost_sum += (current_ship.cost * current_ship.wait)
 
                 #calculating average
         average_cost = cost_sum/(60 * ships_count)
