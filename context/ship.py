@@ -21,6 +21,7 @@ SHIP_MAX_WAIT = 20
 #    }
 #}
 
+
 class ShipFactory(object):
 
     # Unique ID of the next created ship.
@@ -66,18 +67,22 @@ class Ship:
         self.unique_id = unique_id
         self.distance = random.randrange(100)
 
-        self.max_speed_kmh = random.randrange(16, 25)  # kilometers per hour
-
         # urgency indicate the cargo type, fruits and veggies needs to be transferred quickly
         # 1: less urgest, 20:most urgest
         self.cargo_type_urgency = random.randrange(1, 20)
-
 
         # The size indicates the ship size, unable to identify suitable scale
         if size is None:
             self.size = random.randrange(SHIP_MIN_SIZE, SHIP_MAX_SIZE)
         else:
             self.size = size
+
+        if self.size <= (SHIP_MAX_SIZE + SHIP_MIN_SIZE) / 2:
+            self.max_speed_kmh = random.randrange(38, 46)  # kilometers per
+        else:
+            self.max_speed_kmh = random.randrange(30, 38)
+
+        self.minutes_to_port = int((self.distance / self.max_speed_kmh) * 60)
 
         # cost per minute, waiting or travelling
         # cost = crew cost + fuel cost
@@ -88,7 +93,6 @@ class Ship:
 
         #Constraints
         self.max_wait = random.randrange(SHIP_MIN_WAIT, SHIP_MAX_WAIT) if max_wait is None else max_wait
-
 
     def __str__(self):
         return "S{}(sz={}, ur={}, c={:.3f})".format(self.unique_id, self.size, self.cargo_type_urgency, self.cost)

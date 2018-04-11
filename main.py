@@ -1,6 +1,7 @@
 import argparse
 
-from context.flexible import FlexibleObjectiveContext
+
+import context
 from knowledge_base import DictKB
 import simulation
 from mape.evaluation.average_wait import AverageWait
@@ -18,14 +19,14 @@ if __name__ == "__main__":
     parser.add_argument('-a', metavar='agents', type=int, dest='agents',
                         help="Number of agents.", default=4)
     parser.add_argument('-s', metavar='steps', type=int, dest='steps',
-                        help="Number of simulation steps.", default=24*60)
+                        help="Number of simulation steps (minute of simulated time / step).", default=24*60*50)
     args = parser.parse_args()
 
     n_agents = args.agents
     steps = args.steps
 
-    ctx = FlexibleObjectiveContext([0.3, 0.3])
-    ctx.set_traffic_density(ctx.TRAFFIC_LOW)
+    ctx = context.FlexibleObjectiveContext(context.FLEXIBLE_ALL_SHIPS_EVENLY)
+    ctx.set_traffic_density(context.TRAFFIC_HIGH)
 
     shared_knowledge_base = DictKB()
 

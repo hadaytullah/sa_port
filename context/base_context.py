@@ -3,12 +3,13 @@ import random
 from context.abstract_context import AbstractObjectiveContext
 
 
-class BaseObjectiveObjectiveContext(AbstractObjectiveContext):
+class BaseObjectiveContext(AbstractObjectiveContext):
 
-    #Traffic volumes
+    # Traffic volumes
     TRAFFIC_LOW = 'Low'
     TRAFFIC_HIGH = 'High'
     TRAFFIC_RANDOM = 'Random'
+    TRAFFIC_MEDIUM = 'Medium'  # More meaningful name for TRAFFIC_RANDOM
 
     def __init__(self):
         super().__init__()
@@ -23,12 +24,16 @@ class BaseObjectiveObjectiveContext(AbstractObjectiveContext):
         pass
 
     def add_new_ship(self):
+        rand = random.random()
         if self.traffic_density == 'High':
-            return True if random.randrange(0, 100) < 75 else False
+            # One in every six hours
+            return True if rand < (1.0 / 360) else False
         elif self.traffic_density == 'Low':
-            return False if random.randrange(0, 100) < 75 else True
-        elif self.traffic_density == 'Random':
-            return False if random.randrange(0, 100) < 50 else True
+            # One in every 24 hours
+            return True if rand < (1.0 / 1440) else False
+        elif self.traffic_density in ('Random', 'Medium'):
+            # One in every 12 hours
+            return True if rand < (1.0 / 720) else False
 
     def set_traffic_density(self, value):
         self.traffic_density = value

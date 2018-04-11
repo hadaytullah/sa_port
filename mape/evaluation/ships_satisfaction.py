@@ -13,25 +13,17 @@ class ShipsSatisfaction(AbstractEvaluation):
         self.maximize = True
         self.meta_data = EvaluationMetaData(10, operator.ge)
 
-
     def evaluate(self, terminal):
-        average_wait_time = 0
-        ships_count = 0
-
         ships = terminal.served_ships
         ships_count = len(ships)
 
-        if ships_count > 0:
-            #print("WAIT TIMES")
-            satisfied_ships = 0
-            wait_sum = 0
+        if len(ships) == 0:
+            return 0.0
 
-            for index, current_ship in enumerate(ships):
-                #print (" Ship %i served in %i minutes" % (current_ship.unique_id, current_ship.wait))
-                if current_ship.wait <= current_ship.max_wait:
-                    satisfied_ships += 1
+        satisfied_ships = 0
+        for index, current_ship in enumerate(ships):
+            if current_ship.wait <= current_ship.max_wait:
+                satisfied_ships += 1
 
-        #
         satisfaction = (satisfied_ships/ships_count) * 100
-        #print ('Ships satisfied : %i ' %satisfaction)
         return satisfaction

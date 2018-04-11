@@ -1,8 +1,8 @@
-from context.base_context import BaseObjectiveObjectiveContext
+from context.base_context import BaseObjectiveContext
 from context.ship import ShipFactory
 
 
-class RandomDistributionObjectiveContext(BaseObjectiveObjectiveContext):
+class RandomDistributionObjectiveContext(BaseObjectiveContext):
     def __init__(self):
         super().__init__()
         self.context_name = "Randomly generated ships"

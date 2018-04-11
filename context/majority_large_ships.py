@@ -1,10 +1,10 @@
 import random
 
-from context.base_context import BaseObjectiveObjectiveContext
+from context.base_context import BaseObjectiveContext
 from context.ship import ShipFactory
 
 
-class MajorityLargeShipsObjectiveContext(BaseObjectiveObjectiveContext):
+class MajorityLargeShipsObjectiveContext(BaseObjectiveContext):
     def __init__(self):
         super().__init__()
         self.context_name = "Majority of the ships are large"
