@@ -1,13 +1,26 @@
+import math
 import random
 
 
-# K, KG
-SHIP_MIN_SIZE = 60
-SHIP_MAX_SIZE = 180
+# Size in TEU: https://en.wikipedia.org/wiki/Twenty-foot_equivalent_unit
+# Ships range from ~1000 to more than 14500: https://en.wikipedia.org/wiki/Container_ship#Size_categories
+# Average ship size in 2015 was ~3700 TEU: https://www.usmma.edu/sites/usmma.edu/files/docs/CMA%20Paper%20Murray%201%20%282%29.pdf
+SHIP_MIN_SIZE = 500
+SHIP_MAX_SIZE = 16000
 
 # minutes
-SHIP_MIN_WAIT = 4
-SHIP_MAX_WAIT = 20
+SHIP_MIN_WAIT = 360  # 6 hours, could be more probably
+SHIP_MAX_WAIT = 7200  # 5 days, could be more probably
+
+# 23 knots seems to be "the standard" (in 2015) according to Murray's paper (see above)
+SPEED_23_KNOTS = 42.596
+
+# Tons of fuel per TEU to travel at 23 knots for a day, approximation from Murray's paper (p. 18)
+FUEL_PER_TEU = 0.02
+
+# Around 390 today according to: https://shipandbunker.com/prices
+# Bunker price is price per tonne (of coal or oil, I think oil is what above link measures)
+FUEL_BUNKER_PRICE = 390
 
 #SHIP_LOAD_TYPE = {
 #    'bio':{
@@ -43,11 +56,11 @@ class ShipFactory(object):
         """Get new ship size by ship type.
         """
         if ship_type == "Small":
-            return random.randrange(60, 80)
+            return random.randrange(500, 3000)  # Feeders
         if ship_type == "Medium":
-            return random.randrange(120, 140)
+            return random.randrange(3000, 10000)  # Panamax & Post-Panamax
         if ship_type == "Large":
-            return random.randrange(150, 180)
+            return random.randrange(10000, 16000)  # New Panamax & Ultra-large Cargo Vessel (ULCV)
         if type(ship_type) == int:
             return ship_type
         return random.randint(SHIP_MIN_SIZE, SHIP_MAX_SIZE)
@@ -65,13 +78,12 @@ class Ship:
 
     def __init__(self, unique_id, size=None, max_wait=None):
         self.unique_id = unique_id
-        self.distance = random.randrange(100)
 
         # urgency indicate the cargo type, fruits and veggies needs to be transferred quickly
         # 1: less urgest, 20:most urgest
         self.cargo_type_urgency = random.randrange(1, 20)
 
-        # The size indicates the ship size, unable to identify suitable scale
+        # The size in TEU: https://en.wikipedia.org/wiki/Twenty-foot_equivalent_unit
         if size is None:
             self.size = random.randrange(SHIP_MIN_SIZE, SHIP_MAX_SIZE)
         else:
@@ -82,11 +94,26 @@ class Ship:
         else:
             self.max_speed_kmh = random.randrange(30, 38)
 
+        # Atlantic ocean varies from ~2850 to 6400 km in width
+        self.distance = random.randrange(3000)
         self.minutes_to_port = int((self.distance / self.max_speed_kmh) * 60)
+
+        # Hand-wavy estimate: constant + cubic root of the ship size in TEU.
+        # size=500: 18, size=14000: 33
+        self.number_of_crew = int(10 + math.pow(self.size, 0.333))
+        # 150 USD / day (low estimate probably)
+        self.crew_average_salary = 150
+        self.crew_cost_per_minute = (self.number_of_crew * self.crew_average_salary) / 1440
+
+        # Tons of fuel per minute and its cost (FUEL_PER_TEU should be a function of the ship size)
+        self.fuel_per_minute = (FUEL_PER_TEU * self.size) / 1440
+        self.fuel_cost_per_minute = self.fuel_per_minute * FUEL_BUNKER_PRICE
 
         # cost per minute, waiting or travelling
         # cost = crew cost + fuel cost
-        self.cost = (self.size ** 2) * 0.15
+        self.travelling_cost = self.fuel_cost_per_minute + self.crew_cost_per_minute
+        self.waiting_cost = self.crew_cost_per_minute
+        self.cost = self.travelling_cost
 
         # changing attributes, should not be here, it is not a property of the ship
         self.wait = 0
