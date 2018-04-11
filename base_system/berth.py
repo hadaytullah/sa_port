@@ -6,9 +6,8 @@ from mape.mape import Mape
 from context.subjective_context import SubjectiveContext
 
 
-# May be called Berths? https://en.wikipedia.org/wiki/Berth_(moorings)
-class Terminal(Mape, Agent):
-    """Terminal which serves ships by unloading their cargo.
+class Berth(Mape, Agent):
+    """Berth which serves ships by unloading their cargo.
     """
     def __init__(self, strategy, objective_context, evaluation, perceived_attributes, name=None):
         super().__init__()
@@ -22,14 +21,14 @@ class Terminal(Mape, Agent):
 
         # Unload speed for each crane. TEU / minute, i.e. approx 2 minutes per unloading, 2 TEUs at a time.
         self.crane_speed = 1
-        # Cranes part of the terminal. It could be objects, but lets see if more properties for cranes become desirable.
+        # Cranes part of the berth. It could be objects, but lets see if more properties for cranes become desirable.
         self.cranes_count = random.randrange(1, 4)
         self.processing_capacity = self.crane_speed * self.cranes_count
         # Processing capacity per day.
         # TODO: Verify value of this. Are cargo ports operational 24/7?
         self._capacity = self.processing_capacity * (24*60) * 0.75
 
-        # Current ship on dock, its processing time and previously served ships
+        # Current ship on berth, its processing time and previously served ships
         self.ship = None
         self.ship_processed = 0
         self.served_ships = []
@@ -53,7 +52,7 @@ class Terminal(Mape, Agent):
 
     @property
     def capacity(self):
-        """Ideal number of ships the terminal can process in 24hrs
+        """Ideal number of ships the berth can process in 24hrs
 
         Set at the 75% of the whole processing capacity, rest of the time goes into maintenance, breaks etc.
         """

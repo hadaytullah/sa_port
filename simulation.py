@@ -2,16 +2,16 @@
 """
 import random
 
-from base_system.terminal import Terminal
+from base_system.berth import Berth
 
 
-def create_terminals(n_terminals, add_neighbors=True, **kwargs):
-    """Convenience function to create a number of terminals with given kwargs.
+def create_berths(n_terminals, add_neighbors=True, **kwargs):
+    """Convenience function to create a number of berths with given kwargs.
     """
     agents = []
     for i in range(n_terminals):
         agent_name = "T{:0>2}".format(i + 1)
-        agents.append(Terminal(name=agent_name, **kwargs))
+        agents.append(Berth(name=agent_name, **kwargs))
     if add_neighbors:
         for a in agents:
             for b in agents:

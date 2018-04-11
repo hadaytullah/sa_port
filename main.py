@@ -56,7 +56,7 @@ if __name__ == "__main__":
                     'evaluation': AverageWait(),
                     'perceived_attributes': ['ships_arrived', 'traffic_density']
                     }
-    agents = simulation.create_terminals(n_agents, **agent_kwargs)
+    agents = simulation.create_berths(n_agents, **agent_kwargs)
 
     for a in agents:
         a.enable_mape(True)
