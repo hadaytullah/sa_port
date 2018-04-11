@@ -19,16 +19,20 @@ class Terminal(Mape, Agent):
         #self._strategy = strategy_list[0] if len(strategy_list) > 0 else None
         self._strategy = strategy
         self._neighbors = {}
-        # per minute load processing
-        self.processing_capacity = 5
-        self._capacity = self.processing_capacity * (24*60) * 0.75
-        self.served_ships = []
-        # self.resources = 0  # staff
 
+        # Unload speed for each crane. TEU / minute, i.e. approx 2 minutes per unloading, 2 TEUs at a time.
+        self.crane_speed = 1
         # Cranes part of the terminal. It could be objects, but lets see if more properties for cranes become desirable.
         self.cranes_count = random.randrange(1, 4)
+        self.processing_capacity = self.crane_speed * self.cranes_count
+        # Processing capacity per day.
+        # TODO: Verify value of this. Are cargo ports operational 24/7?
+        self._capacity = self.processing_capacity * (24*60) * 0.75
+
+        # Current ship on dock, its processing time and previously served ships
         self.ship = None
         self.ship_processed = 0
+        self.served_ships = []
 
         # Initialize knowledge base
         #self._knowledge_base.create('neighbors', {})

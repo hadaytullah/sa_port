@@ -26,7 +26,7 @@ if __name__ == "__main__":
     steps = args.steps
 
     ctx = context.FlexibleObjectiveContext(context.FLEXIBLE_ALL_SHIPS_EVENLY)
-    ctx.set_traffic_density(context.TRAFFIC_HIGH)
+    ctx.set_traffic_density(context.TRAFFIC_LOW)
 
     shared_knowledge_base = DictKB()
 

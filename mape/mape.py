@@ -54,7 +54,7 @@ class Mape:
             evaluation_value = evaluation.evaluate(self)
             evaluation_sum += evaluation_value
             evals[evaluation] = evaluation_value
-            print('{} {}: {} {}'.format(self.name, evaluation.evaluation_name, evaluation_value, evaluation.evaluation_unit))
+            print('{} {}: {:.3f} {}'.format(self.name, evaluation.evaluation_name, evaluation_value, evaluation.evaluation_unit))
 
         print('Analysing..{}'.format(evaluation_sum))
         self._plan(evals)

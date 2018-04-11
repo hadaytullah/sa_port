@@ -21,7 +21,11 @@ class BaseObjectiveContext(AbstractObjectiveContext):
         pass
 
     def finish_step(self, **kwargs):
-        pass
+        for ship in self.ships_arrived:
+            if ship.minutes_to_port > 0:
+                ship.minutes_to_port -= 1
+            else:
+                ship.wait += 1
 
     def add_new_ship(self):
         rand = random.random()
